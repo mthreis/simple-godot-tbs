@@ -1,0 +1,132 @@
+[gd_scene load_steps=5 format=1]
+
+[ext_resource path="res://tilesetaum.tres" type="TileSet" id=1]
+[ext_resource path="res://Sprite-0004.png" type="Texture" id=2]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends TileMap
+
+var heightmap = []
+var width
+var height
+
+func _ready():
+	var r  = get_used_rect()
+	width  = r.size.x
+	height = r.size.y
+	heightmap.resize(width * height)
+	
+	var t = get_tileset()
+	
+	for x in range(0, width):
+		for y in range(0, height):
+			var n = t.tile_get_name(flatten(x, y))
+			heightmap[flatten(x, y)] = 0
+			#heightmap[flatten(x, y)] = int(n[0])
+			#n.substr(0)
+
+func is_within(x, y):
+	return (x >= 0 && x < width && y >= 0 && y < height)
+
+func flatten(x, y):
+	return x + y * width"
+
+[sub_resource type="GDScript" id=2]
+
+script/source = "extends Sprite
+
+onready var tilemap = get_node(\"../tilemap\")
+var offset
+
+func _ready():
+	offset = get_offset()
+	set_process(true)
+	pass
+
+func _process(delta):
+	
+	var mousePos = tilemap.world_to_map(get_global_mouse_pos())
+	
+	if tilemap.is_within(mousePos.x, mousePos.y) && tilemap.get_cellv(mousePos) >= 0:
+		set_pos(tilemap.map_to_world(mousePos) + Vector2(0, 5))
+		set_offset(offset - Vector2(0, tilemap.heightmap[tilemap.flatten(mousePos.x, mousePos.y)]))
+		
+		var cell = tilemap.get_cell(mousePos.x, mousePos.y)
+		
+		tilemap.get_node(\"Label\").set_text(tilemap.get_tileset().tile_get_name(cell))
+		#tilemap.get_node(\"Label\").set
+	
+	#tilemap.get_node(\"Label\").set_text(str(mousePos))"
+
+[node name="Node" type="Node"]
+
+[node name="tilemap" type="TileMap" parent="."]
+
+mode = 1
+tile_set = ExtResource( 1 )
+cell/size = Vector2( 24, 12 )
+cell/quadrant_size = 16
+cell/custom_transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+cell/half_offset = 2
+cell/tile_origin = 0
+cell/y_sort = false
+collision/use_kinematic = false
+collision/friction = 1.0
+collision/bounce = 0.0
+collision/layers = 1
+collision/mask = 1
+occluder/light_mask = 1
+tile_data = IntArray( 0, 1, 1, 0, 2, 1, 65536, 0, 65537, 0, 65538, 0, 131072, 1, 131073, 0, 131074, 1 )
+script/script = SubResource( 1 )
+
+[node name="Label" type="Label" parent="tilemap"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = -100.0
+margin/top = -56.0
+margin/right = -60.0
+margin/bottom = -42.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "d"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="camera" type="Camera2D" parent="."]
+
+anchor_mode = 1
+rotating = false
+current = true
+zoom = Vector2( 0.25, 0.25 )
+limit/left = -10000000
+limit/top = -10000000
+limit/right = 10000000
+limit/bottom = 10000000
+drag_margin/h_enabled = true
+drag_margin/v_enabled = true
+smoothing/enable = false
+smoothing/speed = 5.0
+drag_margin/left = 0.2
+drag_margin/top = 0.2
+drag_margin/right = 0.2
+drag_margin/bottom = 0.2
+
+[node name="dude" type="Sprite" parent="."]
+
+transform/pos = Vector2( 7, -4 )
+texture = ExtResource( 2 )
+offset = Vector2( -2.5, -7.5 )
+script/script = SubResource( 2 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+
+

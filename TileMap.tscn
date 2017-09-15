@@ -1,0 +1,44 @@
+[gd_scene load_steps=2 format=1]
+
+[ext_resource path="res://dfsdf.tres" type="TileSet" id=1]
+
+[node name="TileMap" type="TileMap"]
+
+transform/pos = Vector2( -172, -15 )
+mode = 1
+tile_set = ExtResource( 1 )
+cell/size = Vector2( 24, 12 )
+cell/quadrant_size = 16
+cell/custom_transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+cell/half_offset = 2
+cell/tile_origin = 0
+cell/y_sort = false
+collision/use_kinematic = false
+collision/friction = 1.0
+collision/bounce = 0.0
+collision/layers = 1
+collision/mask = 1
+occluder/light_mask = 1
+tile_data = IntArray( 852007, 9, 1572908, 9, 1572913, 9, 1638444, 9, 1638445, 9, 1638446, 0, 1638447, 9, 1638448, 9, 1638450, 9, 1638451, 9, 1703977, 0, 1703978, 0, 1703979, 0, 1703980, 0, 1703981, 0, 1703984, 9, 1769512, 0, 1769521, 9, 1769523, 9, 1835048, 0, 1835051, 3, 1835052, 2, 1835053, 5, 1835054, 6, 1835055, 9, 1900584, 0, 1900585, 0, 1900587, 0, 1900588, 1, 1900589, 4, 1900590, 7, 1900591, 8, 1900592, 9, 1966121, 0, 2031663, 9, 2031664, 9, 2031665, 9, 2031666, 9, 2097200, 9, 2097203, 9, 2162732, 9, 2162734, 9, 2162736, 9, 2162738, 9, 2162739, 9, 2228268, 9, 2228269, 9, 2228270, 9, 2228271, 9, 2228272, 9, 2293803, 0 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+transform/pos = Vector2( 211, 454 )
+anchor_mode = 1
+rotating = false
+current = true
+zoom = Vector2( 0.25, 0.25 )
+limit/left = -10000000
+limit/top = -10000000
+limit/right = 10000000
+limit/bottom = 10000000
+drag_margin/h_enabled = true
+drag_margin/v_enabled = true
+smoothing/enable = false
+smoothing/speed = 5.0
+drag_margin/left = 0.2
+drag_margin/top = 0.2
+drag_margin/right = 0.2
+drag_margin/bottom = 0.2
+
+

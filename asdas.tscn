@@ -1,0 +1,44 @@
+[gd_scene load_steps=2 format=1]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends Control
+
+var maxWidth  = 0
+var maxHeight = 0
+
+func _ready():
+	set_process(true)
+	pass
+
+
+func _on_resized():
+	####
+	if maxWidth <= 0 || maxHeight <= 0:
+		return
+	
+	
+	
+	
+	
+	pass # replace with function body"
+
+[node name="Node" type="Node"]
+
+[node name="crap" type="Control" parent="."]
+
+anchor/right = 1
+anchor/bottom = 1
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = -1.0
+margin/bottom = 0.0
+script/script = SubResource( 1 )
+
+[connection signal="resized" from="crap" to="crap" method="_on_resized"]
+
+
