@@ -5,7 +5,8 @@ var can = false
 var scale = 1
 var originalSize
 
-export(NodePath) var referenceCamera
+export(NodePath) var _referenceCamera = ""
+var referenceCamera
 
 func _ready():
 	originalSize = get_size()
@@ -26,8 +27,11 @@ func _process(dt):
 		_on_size_changed()
 		
 	
-	if referenceCamera:
-		scale = get_node(referenceCamera).zoom
+	if _referenceCamera != "":
+		referenceCamera = get_node(_referenceCamera)
+		
+	if referenceCamera != null:
+		scale = referenceCamera.zoom
 	
 	firstUpdate = false
 

@@ -4,10 +4,16 @@ var gridPos
 var world
 var manager
 
+var areaOffset
+
+var offset
+
+var locked = false
+
 func start():
 	world = manager.world
-	
-	
+	#areaOffset = get_node("Opacity/Area").get_pos()
+	offset = get_offset().y
 	if world != null:
 		gridPos = world.world_to_map(get_pos())
 		print("gridPos: " + str(gridPos))
@@ -16,7 +22,7 @@ func start():
 	pass
 
 func _input(ev):
-	if world == null:
+	if world == null || locked:
 		return
 	
 	var cSize = world.get_cell_size()
@@ -30,7 +36,7 @@ func _input(ev):
 		if n >= 0:
 			translate(Vector2(mx, my))
 			gridPos.x += 1
-			set_offset(Vector2(0, -world.get_tile_height(gridPos.x, gridPos.y)))
+			set_offset(Vector2(0, offset-world.get_tile_height(gridPos.x, gridPos.y)))
 
 	elif ev.is_action_pressed("ui_left"):
 		var n = world.get_cell(gridPos.x - 1, gridPos.y)
@@ -38,7 +44,7 @@ func _input(ev):
 		if n >= 0:
 			translate(Vector2(-mx, -my))
 			gridPos.x -= 1
-			set_offset(Vector2(0, -world.get_tile_height(gridPos.x, gridPos.y)))
+			set_offset(Vector2(0, offset-world.get_tile_height(gridPos.x, gridPos.y)))
 	
 	elif ev.is_action_pressed("ui_up"):
 		
@@ -47,7 +53,7 @@ func _input(ev):
 		if n >= 0:
 			translate(Vector2(mx, -my))
 			gridPos.y -= 1
-			set_offset(Vector2(0, -world.get_tile_height(gridPos.x, gridPos.y)))
+			set_offset(Vector2(0, offset-world.get_tile_height(gridPos.x, gridPos.y)))
 
 	elif ev.is_action_pressed("ui_down"):
 		
@@ -56,13 +62,19 @@ func _input(ev):
 		if n >= 0:
 			translate(Vector2(-mx, my))
 			gridPos.y += 1
-			set_offset(Vector2(0, -world.get_tile_height(gridPos.x, gridPos.y)))
+			set_offset(Vector2(0, offset-world.get_tile_height(gridPos.x, gridPos.y)))
+
+func teleport_to(x, y):
+	var pos = world.map_to_world(Vector2(x, y))
 	
-#	elif ev.is_action_pressed("ui_accept"):
-#		var actor = get_node("../Actor")
-#		
-#		var path = world.find_path(actor.gridPos, gridPos)
-#		
-#		if path.size() > 0:
-#			actor.teleport_to(gridPos.x, gridPos.y)
-#			print("Path count: " + str(path.size()))
+	gridPos = Vector2(x, y)
+	
+	set_pos(pos + Vector2(0, world.get_cell_size().y / 2) )
+	set_offset(offset - Vector2(0, world.get_tile_height(x, y)))
+	
+func teleport_to_v(vec):
+	var pos = world.map_to_world(vec)
+	gridPos = vec
+	
+	set_pos(pos + Vector2(0, world.get_cell_size().y / 2 - 2) )
+	set_offset(Vector2(0, offset) - Vector2(0, world.get_tile_height(vec.x, vec.y)))

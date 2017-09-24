@@ -1,0 +1,287 @@
+[gd_scene load_steps=12 format=1]
+
+[ext_resource path="res://Data/Scripts/Battle/BattleManager.gd" type="Script" id=1]
+[ext_resource path="res://Data/Textures/Sprites/Battle/Cursor.png" type="Texture" id=2]
+[ext_resource path="res://Data/Scripts/Battle/Cursor.gd" type="Script" id=3]
+[ext_resource path="res://scalable_gui_controller.gd" type="Script" id=4]
+[ext_resource path="res://scalable_gui.gd" type="Script" id=5]
+[ext_resource path="res://px.png" type="Texture" id=6]
+[ext_resource path="res://04B_03__.fnt" type="BitmapFont" id=7]
+[ext_resource path="res://Data/Textures/Sprites/UI/Arrow.png" type="Texture" id=8]
+
+[sub_resource type="RectangleShape2D" id=1]
+
+custom_solver_bias = 0.0
+extents = Vector2( 8, 3 )
+
+[sub_resource type="GDScript" id=2]
+
+script/source = "extends KinematicBody2D
+
+func _ready():
+	set_process(true)
+	pass
+
+func _process(dt):
+	var p = get_parent()
+	
+	if is_colliding():
+		p.set_opacity(0.5)
+	else:
+		p.set_opacity(1.0)"
+
+[sub_resource type="GDScript" id=3]
+
+script/source = "extends Node
+
+onready var p = get_parent()
+var actor
+var active
+var manager
+onready var panel = get_parent()
+onready var arrow = get_parent().get_node(\"Arrow\")
+
+var arrowInitialPos
+
+var index = 0
+
+export var height = 1
+
+export var options = 4
+
+var waitMove
+
+func _ready():
+	arrowInitialPos = arrow.get_pos()
+	set_process_input(true)
+	set_process(true)
+
+func _process(delta):
+	if manager != null:
+		if manager.state == manager.STATE_WAIT_MOVE:
+			if !actor.isMoving:
+				panel.set_hidden(false)
+				waitMove = false
+				active = true
+
+
+
+func _input(ev):
+	if active:
+		if ev.is_action_pressed(\"ui_cancel\"):
+			#panel.set_hidden(true)
+			#active = false
+			activate(false)
+			index = 0
+			arrow.set_pos(arrowInitialPos + Vector2(0, index * height))
+			
+			manager.state = manager.STATE_NAVIGATION
+			manager.cursor.locked = false
+			print(\"DIGDIM\")
+		
+		elif ev.is_action_pressed(\"ui_accept\"):
+			
+			if index == 0:
+#				manager.start_move_phase(actor)
+#				manager.cursor.locked = false
+#				panel.set_hidden(true)
+#				active = false
+				manager.start_move_phase_from_caller(actor, self)
+				manager.cursor.locked = false
+				activate(false)
+			
+			elif index == 1:
+				
+				manager.start_act_phase_from_caller(actor, self)
+				manager.cursor.locked = false
+				activate(false)
+				#panel.set_hidden(true)
+				#active = false
+				#waitMove = true
+			
+			elif index == 2:
+				manager.state = manager.STATE_WAIT
+				print(\"crl\")
+				var b = preload(\"res://Data/Prefabs/Battle/WaitState.tscn\").instance()
+				b.init(self, actor)
+				add_child(b)
+				#b.set_owner(self)
+				
+				
+				activate(false)
+				
+				
+				
+		
+		elif ev.is_action_pressed(\"ui_down\"):
+			index = min(index + 1, options - 1)
+			arrow.set_pos(arrowInitialPos + Vector2(0, index * height))
+		
+		
+		elif ev.is_action_pressed(\"ui_up\"):
+			index = max(index - 1, 0)
+			arrow.set_pos(arrowInitialPos + Vector2(0, index * height))
+		
+
+func _on_BattleManager_has_entered_actions_menu(_manager, _actor):
+	panel.set_hidden(false)
+	manager = _manager
+	actor  = _actor
+	active = true
+
+func set_index(value):
+	index = value
+	arrow.set_pos(arrowInitialPos + Vector2(0, index * height))
+
+func activate(enable):
+	panel.set_hidden(!enable)
+	active = enable
+	"
+
+[node name="BattleManager" type="Node"]
+
+script/script = ExtResource( 1 )
+height = 1
+
+[node name="Cursor" type="Sprite" parent="."]
+
+editor/display_folded = true
+transform/pos = Vector2( 48, 88 )
+texture = ExtResource( 2 )
+offset = Vector2( 0, 1 )
+script/script = ExtResource( 3 )
+
+[node name="Opacity" type="KinematicBody2D" parent="Cursor"]
+
+input/pickable = false
+shapes/0/shape = SubResource( 1 )
+shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+shapes/0/trigger = false
+collision/layers = 1
+collision/mask = 1
+collision/margin = 0.08
+script/script = SubResource( 2 )
+
+[node name="Shape" type="CollisionShape2D" parent="Cursor/Opacity"]
+
+visibility/visible = false
+shape = SubResource( 1 )
+trigger = false
+_update_shape_index = 0
+
+[node name="Canvas" type="CanvasLayer" parent="."]
+
+layer = 1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+
+[node name="UI" type="Control" parent="Canvas"]
+
+anchor/right = 1
+anchor/bottom = 1
+rect/scale = Vector2( 3, 3 )
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 640.0
+margin/bottom = 360.0
+script/script = ExtResource( 4 )
+_referenceCamera = ""
+
+[node name="UnitActions" type="Panel" parent="Canvas/UI"]
+
+visibility/visible = false
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 273.0
+margin/top = 134.0
+margin/right = 315.0
+margin/bottom = 176.0
+script/script = ExtResource( 5 )
+vAlign = 2
+hAlign = 2
+
+[node name="Shadow" type="TextureFrame" parent="Canvas/UI/UnitActions"]
+
+visibility/behind_parent = true
+focus/ignore_mouse = false
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 1.0
+margin/top = 1.0
+margin/right = 43.0
+margin/bottom = 43.0
+texture = ExtResource( 6 )
+modulate = Color( 0, 0, 0, 1 )
+expand = true
+stretch_mode = 0
+
+[node name="MAWS" type="Label" parent="Canvas/UI/UnitActions"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 10.0
+margin/top = 3.0
+margin/right = 40.0
+margin/bottom = 40.0
+custom_fonts/font = ExtResource( 7 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "Move
+Attack
+Wait
+Status"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Arrow" type="TextureFrame" parent="Canvas/UI/UnitActions"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 3.0
+margin/top = 3.0
+margin/right = 7.0
+margin/bottom = 8.0
+texture = ExtResource( 8 )
+modulate = Color( 0.910156, 0.795165, 0.17421, 1 )
+stretch_mode = 0
+
+[node name="Shadow" type="TextureFrame" parent="Canvas/UI/UnitActions/Arrow"]
+
+visibility/behind_parent = true
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 1.0
+margin/top = 1.0
+margin/right = 5.0
+margin/bottom = 6.0
+texture = ExtResource( 8 )
+modulate = Color( 0, 0, 0, 1 )
+stretch_mode = 0
+
+[node name="Menu" type="Node" parent="Canvas/UI/UnitActions"]
+
+script/script = SubResource( 3 )
+height = 10
+options = 4
+
+[connection signal="has_entered_actions_menu" from="." to="Canvas/UI/UnitActions/Menu" method="_on_BattleManager_has_entered_actions_menu"]
+
+[connection signal="item_rect_changed" from="Canvas/UI" to="Canvas/UI" method="_on_size_changed"]
+
+[connection signal="resized" from="Canvas/UI" to="Canvas/UI" method="_on_resized"]
+
+

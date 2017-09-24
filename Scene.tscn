@@ -7,9 +7,10 @@
 [ext_resource path="res://Sprite-0007.png" type="Texture" id=5]
 [ext_resource path="res://Sprite-0001.tex" type="Texture" id=6]
 [ext_resource path="res://dfsdf.tres" type="TileSet" id=7]
-[ext_resource path="res://Sprite-0006.png" type="Texture" id=8]
-[ext_resource path="res://Sprite-0004.png" type="Texture" id=9]
-[ext_resource path="res://marke.png" type="Texture" id=10]
+[ext_resource path="res://Data/Prefabs/ScalableCamera.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Sprite-0006.png" type="Texture" id=9]
+[ext_resource path="res://Sprite-0004.png" type="Texture" id=10]
+[ext_resource path="res://marke.png" type="Texture" id=11]
 
 [sub_resource type="CanvasItemShader" id=1]
 
@@ -34,36 +35,6 @@ script/source = "extends TileMap
 # class member variables go here, for example:
 # var a = 2
 # var b = \"textvar\""
-
-[sub_resource type="GDScript" id=4]
-
-script/source = "extends Camera2D
-
-export(int, \"Width\", \"Height\") var scalingReference
-var zoom
-func _ready():
-	set_process(true)
-	pass
-
-func _process(dt):
-#	get_node(\"Label\").set_text(str(get_viewport_rect()))
-#	
-#	var s = OS.get_window_size()
-#	
-#	OS.set_window_size(Vector2(round(s.x / 2) * 2, round(s.y / 2) * 2))
-#	
-	zoom = max(1.0, floor(OS.get_window_size().x / 300.0))
-	set_zoom(Vector2(1.0 / zoom, 1.0 / zoom))
-#	
-#	var ui = get_node(\"../CanvasLayer/UI\")
-	
-	#b.set_scale(Vector2(z, z))
-	#b.set_size(b.originalSize / z)
-	
-	if Input.is_key_pressed(KEY_Z):
-		OS.set_window_fullscreen(true)
-	#set_scale(
-	pass"
 
 [sub_resource type="GDScript" id=5]
 
@@ -92,7 +63,6 @@ func _input(ev):
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-editor/display_folded = true
 layer = 1
 offset = Vector2( 0, 0 )
 rotation = 0.0
@@ -100,7 +70,6 @@ scale = Vector2( 1, 1 )
 
 [node name="userInterface1" type="Control" parent="CanvasLayer"]
 
-editor/display_folded = true
 anchor/right = 1
 anchor/bottom = 1
 rect/scale = Vector2( 3, 3 )
@@ -113,7 +82,7 @@ margin/top = 0.0
 margin/right = 640.0
 margin/bottom = 360.0
 script/script = ExtResource( 1 )
-referenceCamera = NodePath("../../camera")
+_referenceCamera = ""
 
 [node name="dialogueBoxBL" type="TextureFrame" parent="CanvasLayer/userInterface1"]
 
@@ -325,93 +294,56 @@ occluder/light_mask = 1
 tile_data = IntArray( -655364, 8, -655363, 9, -655362, 8, -655361, 7, -589829, 9, -589828, 8, -589827, 8, -589826, 8, -589825, 8, -655360, 7, -524298, 9, -524297, 6, -524296, 5, -524295, 4, -524293, 9, -524292, 6, -524291, 9, -524290, 1, -524289, 8, -589824, 4, -458763, 9, -458762, 8, -458761, 7, -458760, 6, -458759, 5, -458758, 1, -458757, 1, -458756, 4, -458755, 1, -458754, 0, -458753, 1, -524288, 1, -393227, 6, -393226, 7, -393225, 6, -393224, 5, -393223, 2, -393222, 3, -393221, 3, -393220, 1, -393219, 0, -393218, 0, -393217, 0, -458752, 1, -458751, 1, -327691, 5, -327690, 6, -327689, 5, -327688, 2, -327687, 3, -327686, 3, -327685, 3, -327684, 3, -327683, 0, -327682, 0, -327681, 3, -393216, 0, -393215, 1, -262155, 4, -262154, 5, -262153, 2, -262152, 3, -262151, 3, -262150, 3, -262149, 0, -262148, 3, -262147, 0, -262146, 3, -262145, 0, -327680, 3, -327679, 3, -327678, 3, -196619, 1, -196618, 0, -196617, 3, -196616, 0, -196615, 3, -196614, 0, -196613, 3, -196612, 0, -196611, 0, -196610, 0, -196609, 0, -262144, 3, -262143, 0, -262142, 3, -262141, 0, -131082, 0, -131081, 3, -131080, 3, -131079, 0, -131078, 3, -131077, 2, -131076, 0, -131075, 0, -131074, 0, -131073, 3, -196608, 0, -196607, 3, -196606, 0, -196605, 0, -196604, 1, -65547, 3, -65546, 3, -65545, 3, -65544, 0, -65543, 3, -65542, 0, -65541, 1, -65540, 0, -65539, 0, -65538, 0, -65537, 0, -131072, 0, -131071, 0, -131070, 0, -131069, 3, -131068, 3, -10, 3, -9, 3, -8, 0, -7, 0, -6, 0, -5, 1, -4, 1, -3, 0, -2, 0, -1, 0, -65536, 0, -65535, 0, -65534, 0, -65533, 3, 65527, 3, 65528, 3, 65529, 0, 65530, 3, 65531, 0, 65532, 0, 65533, 0, 65534, 0, 65535, 0, 0, 0, 1, 0, 2, 3, 3, 0, 4, 0, 131063, 3, 131064, 3, 131065, 3, 131066, 0, 131067, 0, 131068, 0, 131069, 0, 131070, 0, 131071, 0, 65536, 0, 65537, 0, 65538, 0, 65539, 0, 196601, 0, 196602, 3, 196603, 3, 196604, 0, 196605, 0, 196606, 0, 196607, 0, 131072, 0, 131073, 0, 131074, 3, 262138, 3, 262139, 0, 262140, 0, 262141, 0, 262142, 0, 262143, 0, 196608, 0, 196609, 0, 196610, 0, 196611, 3, 327676, 0, 327677, 3, 327678, 0, 327679, 3, 262144, 0, 262145, 3, 262146, 3, 393213, 3, 393214, 3, 393215, 3, 327680, 3 )
 script/script = SubResource( 3 )
 
-[node name="camera" type="Camera2D" parent="."]
-
-editor/display_folded = true
-transform/pos = Vector2( 184, 189 )
-anchor_mode = 1
-rotating = false
-current = true
-zoom = Vector2( 0.333, 0.333 )
-limit/left = -10000000
-limit/top = -10000000
-limit/right = 10000000
-limit/bottom = 10000000
-drag_margin/h_enabled = true
-drag_margin/v_enabled = true
-smoothing/enable = false
-smoothing/speed = 5.0
-drag_margin/left = 0.2
-drag_margin/top = 0.2
-drag_margin/right = 0.2
-drag_margin/bottom = 0.2
-script/script = SubResource( 4 )
-scalingReference = null
-
-[node name="Label" type="Label" parent="camera"]
-
-focus/ignore_mouse = true
-focus/stop_mouse = true
-size_flags/horizontal = 2
-size_flags/vertical = 0
-margin/left = -12.0
-margin/top = -11.0
-margin/right = 28.0
-margin/bottom = 3.0
-percent_visible = 1.0
-lines_skipped = 0
-max_lines_visible = -1
+[node name="camera" parent="." instance=ExtResource( 8 )]
 
 [node name="Sprite" type="Sprite" parent="."]
 
 visibility/visible = false
 transform/pos = Vector2( 167, 87 )
-texture = ExtResource( 8 )
+texture = ExtResource( 9 )
 centered = false
 
 [node name="Sprite2" type="Sprite" parent="."]
 
 visibility/visible = false
 transform/pos = Vector2( 94, 216 )
-texture = ExtResource( 8 )
+texture = ExtResource( 9 )
 centered = false
 
 [node name="Sprite4" type="Sprite" parent="."]
 
 visibility/visible = false
 transform/pos = Vector2( 251, 85 )
-texture = ExtResource( 8 )
+texture = ExtResource( 9 )
 centered = false
 
 [node name="Sprite3" type="Sprite" parent="."]
 
 visibility/visible = false
 transform/pos = Vector2( 57, 149 )
-texture = ExtResource( 8 )
+texture = ExtResource( 9 )
 centered = false
 
 [node name="Sprite1" type="Sprite" parent="."]
 
 transform/pos = Vector2( 141, 157 )
-texture = ExtResource( 9 )
+texture = ExtResource( 10 )
 centered = false
 
 [node name="Sprite5" type="Sprite" parent="."]
 
 transform/pos = Vector2( 153, 163 )
-texture = ExtResource( 9 )
+texture = ExtResource( 10 )
 centered = false
 
 [node name="Sprite 2" type="Sprite" parent="."]
 
 transform/pos = Vector2( 213, 194 )
-texture = ExtResource( 10 )
+texture = ExtResource( 11 )
 script/script = SubResource( 5 )
 
 [connection signal="item_rect_changed" from="CanvasLayer/userInterface1" to="CanvasLayer/userInterface1" method="_on_size_changed"]
 
 [connection signal="resized" from="CanvasLayer/userInterface1" to="CanvasLayer/userInterface1" method="_on_resized"]
-
-[connection signal="item_rect_changed" from="camera" to="CanvasLayer/userInterface1/Panel" method="_on_camera_resized"]
 
 

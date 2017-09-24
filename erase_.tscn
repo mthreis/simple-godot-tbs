@@ -1,0 +1,44 @@
+[gd_scene load_steps=2 format=1]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends Node2D
+
+# class member variables go here, for example:
+# var a = 2
+# var b = \"textvar\"
+
+func _ready():
+	set_process(true)
+	pass
+
+func _process(delta):
+	 
+	get_node(\"Label\").set_text(str(get_angle_dg(get_pos(), get_global_mouse_pos())))
+
+func get_angle_dg(from, to):
+	var angle = (to - from).angle()
+	angle = rad2deg(angle)
+	angle += 180
+	return angle"
+
+[node name="Node" type="Node2D"]
+
+transform/pos = Vector2( 97, 68 )
+script/script = SubResource( 1 )
+
+[node name="Label" type="Label" parent="."]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 40.0
+margin/bottom = 14.0
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+

@@ -4,8 +4,11 @@ export(int, "Top", "Middle", "Bottom") var vAlign = 0
 export(int, "Left", "Center", "Right") var hAlign = 0
 
 var pos = Vector2()
+var manager
+var active = false
 
 func _ready():
+	set_process_input(true)
 	update_pos()
 	#get_node("pos").set_text("pos:" + str(pos))
 
