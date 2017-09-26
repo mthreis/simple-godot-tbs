@@ -16,6 +16,7 @@ var color = 0.0
 
 var cursorPos
 var cursorGridPos
+var found = null
 
 func init(_manager, _actor):
 	manager = _manager
@@ -25,6 +26,23 @@ func init(_manager, _actor):
 	cursorPos = manager.cursor.get_pos()
 	cursorGridPos = manager.cursor.gridPos
 
+func on_cursor_has_moved():
+	found = null
+	for i in spots:
+		if manager.cursor.gridPos == i:
+			found = world.get_unit_at(manager.cursor.gridPos) 
+	
+	var h = manager.hitInfo
+	
+	if found != null:
+		#print("Found ", found.name)
+		
+		h.set_hidden(false)
+		h.get_node("Damage/Value").set_text(str(actor.damage - found.defense))
+		h.get_node("Chance/Value").set_text(str(actor.chance))
+	else:
+		h.set_hidden(true)
+
 func _ready():
 	set_process(true)
 	set_process_input(true)
@@ -32,6 +50,8 @@ func _ready():
 	manager.selected = actor
 	manager.state = manager.STATE_ACT
 	spots = actor.get_targettable_panels()
+	
+	manager.cursor.connect("has_moved", self, "on_cursor_has_moved")
 	
 	#
 	for i in spots:
@@ -61,10 +81,22 @@ func _input(ev):
 	if ev.is_action_pressed("ui_cancel"):
 		print("UECRL")
 		if caller != null:
+			var h = manager.hitInfo
+			h.set_hidden(true)
+			
 			get_tree().set_input_as_handled()
 			manager.cursor.locked = true
 			manager.cursor.teleport_to_v(actor.gridPos)
 			
+			end()
+	
+	elif ev.is_action_pressed("ui_accept"):
+		if found != null:
+			found.HP -= actor.damage
+			manager.hitInfo.set_hidden(true)
+			get_tree().set_input_as_handled()
+			manager.cursor.locked = true
+			manager.cursor.teleport_to_v(actor.gridPos)
 			end()
 
 func _process(dt):

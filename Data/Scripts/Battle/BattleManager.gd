@@ -10,6 +10,9 @@ const STATE_WAIT = 6
 
 export var height = 1
 
+onready var hitInfo = get_node("Canvas/UI/HitInfo")
+onready var actorInfo = get_node("Canvas/UI/ActorInfo")
+
 var backToMenu = true
 
 signal has_entered_actions_menu
@@ -19,6 +22,10 @@ var actState
 var moveState
 
 var markers = []
+
+export(Color) var enemyColor
+export(Color) var allyColor
+
 
 var selected
 var movable
@@ -119,7 +126,36 @@ func _input(event):
 			#else:
 			#	i.set_opacity(min(1.0, i.get_opacity() + 0.025))
 				
+
+func on_cursor_has_moved():
 	
+	#if state != STATE_MENU:
+	var found = world.get_unit_at(cursor.gridPos) 
+	
+	var h = actorInfo
+	
+	if found != null:
+		#print("Found ", found.name)
+		
+		h.set_hidden(false)
+		h.get_node("Actor").set_text(str(found.name))
+		h.get_node("HP/Value").set_text(str(found.HP, "/", found.maxHP))
+		h.get_node("MP/Value").set_text(str(found.MP, "/", found.maxMP))
+		
+		var color
+		
+		if found.group == 0:
+			color = allyColor
+		else:
+			color = enemyColor
+		
+		#h.get_node("Actor").set("custom_colors/font_color", color)
+		
+		#h.get_node("Chance/Value").set_text(str(actor.chance))
+	else:
+		h.set_hidden(true)
+
+
 func _ready():
 	
 	
@@ -127,6 +163,8 @@ func _ready():
 	set_process_input(true)
 	cursor = get_node("Cursor")
 	cursor.manager = self
+	
+	cursor.connect("has_moved", self, "on_cursor_has_moved")
 	
 	canvas = get_node("Canvas/UI")
 	canvas.referenceCamera = get_node("../Camera")

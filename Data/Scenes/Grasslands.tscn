@@ -12,7 +12,7 @@
 [ext_resource path="res://Data/Scripts/ScalableCamera.gd" type="Script" id=10]
 [ext_resource path="res://Data/Prefabs/Battle/BattleManager.tscn" type="PackedScene" id=11]
 
-[sub_resource type="CanvasItemShader" id=11]
+[sub_resource type="CanvasItemShader" id=1]
 
 _code = {
 "fragment": "uniform color top;
@@ -28,16 +28,15 @@ COLOR = top + diff * UV.y;",
 "vertex_ofs": 0
 }
 
-[sub_resource type="CanvasItemMaterial" id=12]
+[sub_resource type="CanvasItemMaterial" id=2]
 
-shader/shader = SubResource( 11 )
+shader/shader = SubResource( 1 )
 shader/shading_mode = 0
 shader_param/top = Color( 0.200119, 0.509986, 0.839844, 1 )
 shader_param/bottom = Color( 0.711136, 0.739194, 0.761719, 1 )
 
-[sub_resource type="Animation" id=1]
+[sub_resource type="Animation" id=3]
 
-resource/name = "idle_down"
 length = 0.1
 loop = false
 step = 0.1
@@ -50,40 +49,6 @@ tracks/0/keys = {
 "transitions": FloatArray( 1 ),
 "update": 1,
 "values": [ 4 ]
-}
-
-[sub_resource type="Animation" id=2]
-
-resource/name = "idle_left"
-length = 0.1
-loop = false
-step = 0.1
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/imported = false
-tracks/0/keys = {
-"times": FloatArray( 0 ),
-"transitions": FloatArray( 1 ),
-"update": 1,
-"values": [ 12 ]
-}
-
-[sub_resource type="Animation" id=3]
-
-resource/name = "idle_right"
-length = 0.1
-loop = false
-step = 0.1
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/imported = false
-tracks/0/keys = {
-"times": FloatArray( 0 ),
-"transitions": FloatArray( 1 ),
-"update": 1,
-"values": [ 0 ]
 }
 
 [sub_resource type="Animation" id=4]
@@ -99,39 +64,39 @@ tracks/0/keys = {
 "times": FloatArray( 0 ),
 "transitions": FloatArray( 1 ),
 "update": 1,
-"values": [ 8 ]
+"values": [ 12 ]
 }
 
 [sub_resource type="Animation" id=5]
 
-length = 1.0
-loop = true
-step = 0.25
+length = 0.1
+loop = false
+step = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = {
-"times": FloatArray( 0, 0.25, 0.5, 0.75 ),
-"transitions": FloatArray( 1, 1, 1, 1 ),
+"times": FloatArray( 0 ),
+"transitions": FloatArray( 1 ),
 "update": 1,
-"values": [ 4, 5, 6, 7 ]
+"values": [ 0 ]
 }
 
 [sub_resource type="Animation" id=6]
 
-length = 1.0
-loop = true
-step = 0.25
+length = 0.1
+loop = false
+step = 0.1
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/imported = false
 tracks/0/keys = {
-"times": FloatArray( 0, 0.25, 0.5, 0.75 ),
-"transitions": FloatArray( 1, 1, 1, 1 ),
+"times": FloatArray( 0 ),
+"transitions": FloatArray( 1 ),
 "update": 1,
-"values": [ 12, 13, 14, 15 ]
+"values": [ 8 ]
 }
 
 [sub_resource type="Animation" id=7]
@@ -147,15 +112,47 @@ tracks/0/keys = {
 "times": FloatArray( 0, 0.25, 0.5, 0.75 ),
 "transitions": FloatArray( 1, 1, 1, 1 ),
 "update": 1,
+"values": [ 4, 5, 6, 7 ]
+}
+
+[sub_resource type="Animation" id=8]
+
+length = 1.0
+loop = true
+step = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 0.25, 0.5, 0.75 ),
+"transitions": FloatArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 12, 13, 14, 15 ]
+}
+
+[sub_resource type="Animation" id=9]
+
+length = 1.0
+loop = true
+step = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/imported = false
+tracks/0/keys = {
+"times": FloatArray( 0, 0.25, 0.5, 0.75 ),
+"transitions": FloatArray( 1, 1, 1, 1 ),
+"update": 1,
 "values": [ 0, 1, 2, 3 ]
 }
 
-[sub_resource type="RectangleShape2D" id=8]
+[sub_resource type="RectangleShape2D" id=10]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
 
-[sub_resource type="GDScript" id=9]
+[sub_resource type="GDScript" id=11]
 
 script/source = "extends KinematicBody2D
 
@@ -175,7 +172,7 @@ func _process(dt):
 
 [node name="Background" type="TextureFrame" parent="."]
 
-material/material = SubResource( 12 )
+material/material = SubResource( 2 )
 focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
@@ -191,7 +188,6 @@ stretch_mode = 0
 
 [node name="World" type="TileMap" parent="."]
 
-editor/display_folded = true
 mode = 1
 tile_set = ExtResource( 2 )
 cell/size = Vector2( 24, 12 )
@@ -241,6 +237,12 @@ hframes = 4
 frame = 12
 script/script = ExtResource( 6 )
 attackRange = 5
+damage = 10
+chance = 97
+defense = 2
+maxHP = 24
+maxMP = 4
+name = "DudeA"
 group = 0
 move = 4
 
@@ -249,13 +251,13 @@ move = 4
 playback/process_mode = 1
 playback/default_blend_time = 0.0
 root/root = NodePath("..")
-anims/idle_down = SubResource( 1 )
-anims/idle_left = SubResource( 2 )
-anims/idle_right = SubResource( 3 )
-anims/idle_up = SubResource( 4 )
-anims/move_down = SubResource( 5 )
-anims/move_left = SubResource( 6 )
-anims/move_right = SubResource( 7 )
+anims/idle_down = SubResource( 3 )
+anims/idle_left = SubResource( 4 )
+anims/idle_right = SubResource( 5 )
+anims/idle_up = SubResource( 6 )
+anims/move_down = SubResource( 7 )
+anims/move_left = SubResource( 8 )
+anims/move_right = SubResource( 9 )
 anims/move_up = ExtResource( 7 )
 playback/active = true
 playback/speed = 1.5
@@ -275,6 +277,12 @@ hframes = 4
 frame = 11
 script/script = ExtResource( 6 )
 attackRange = 2
+damage = 10
+chance = 85
+defense = 6
+maxHP = 25
+maxMP = 4
+name = "DudeB"
 group = 0
 move = 4
 
@@ -283,13 +291,13 @@ move = 4
 playback/process_mode = 1
 playback/default_blend_time = 0.0
 root/root = NodePath("..")
-anims/idle_down = SubResource( 1 )
-anims/idle_left = SubResource( 2 )
-anims/idle_right = SubResource( 3 )
-anims/idle_up = SubResource( 4 )
-anims/move_down = SubResource( 5 )
-anims/move_left = SubResource( 6 )
-anims/move_right = SubResource( 7 )
+anims/idle_down = SubResource( 3 )
+anims/idle_left = SubResource( 4 )
+anims/idle_right = SubResource( 5 )
+anims/idle_up = SubResource( 6 )
+anims/move_down = SubResource( 7 )
+anims/move_left = SubResource( 8 )
+anims/move_right = SubResource( 9 )
 anims/move_up = ExtResource( 7 )
 playback/active = true
 playback/speed = 1.5
@@ -309,6 +317,12 @@ hframes = 4
 modulate = Color( 0.210358, 0.121094, 1, 1 )
 script/script = ExtResource( 6 )
 attackRange = 1
+damage = 10
+chance = 68
+defense = 3
+maxHP = 35
+maxMP = 4
+name = "DudeC"
 group = 1
 move = 4
 
@@ -317,13 +331,13 @@ move = 4
 playback/process_mode = 1
 playback/default_blend_time = 0.0
 root/root = NodePath("..")
-anims/idle_down = SubResource( 1 )
-anims/idle_left = SubResource( 2 )
-anims/idle_right = SubResource( 3 )
-anims/idle_up = SubResource( 4 )
-anims/move_down = SubResource( 5 )
-anims/move_left = SubResource( 6 )
-anims/move_right = SubResource( 7 )
+anims/idle_down = SubResource( 3 )
+anims/idle_left = SubResource( 4 )
+anims/idle_right = SubResource( 5 )
+anims/idle_up = SubResource( 6 )
+anims/move_down = SubResource( 7 )
+anims/move_left = SubResource( 8 )
+anims/move_right = SubResource( 9 )
 anims/move_up = ExtResource( 7 )
 playback/active = true
 playback/speed = 1.5
@@ -344,17 +358,17 @@ script/script = ExtResource( 9 )
 
 transform/pos = Vector2( -1, -19 )
 input/pickable = false
-shapes/0/shape = SubResource( 8 )
+shapes/0/shape = SubResource( 10 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = true
 collision/layers = 1
 collision/mask = 1
 collision/margin = 0.08
-script/script = SubResource( 9 )
+script/script = SubResource( 11 )
 
 [node name="Shape" type="CollisionShape2D" parent="World/Tree1/Opacity"]
 
-shape = SubResource( 8 )
+shape = SubResource( 10 )
 trigger = true
 _update_shape_index = 0
 
@@ -381,6 +395,9 @@ script/script = ExtResource( 10 )
 scalingReference = null
 
 [node name="BattleManager" parent="." instance=ExtResource( 11 )]
+
+enemyColor = null
+allyColor = null
 
 [connection signal="item_rect_changed" from="Camera" to="Camera" method="_on_Camera_item_rect_changed"]
 

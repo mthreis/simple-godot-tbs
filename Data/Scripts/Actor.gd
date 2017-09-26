@@ -11,6 +11,20 @@ const ENEMY = 1
 
 export(int) var attackRange = 1
 
+export(int) var damage = 10
+export(int) var chance = 85
+export(int) var defense = 2
+
+export(int) var maxHP = 10
+var HP = maxHP
+
+export(int) var maxMP = 4
+var MP = maxMP
+
+
+
+export var name = "Actor"
+
 export var group = ALLY
 
 const TOP = 3
@@ -75,6 +89,9 @@ func _process(delta):
 				update_next_spot()
 
 func _ready():
+	HP = maxHP
+	MP = maxMP
+	
 	set_process(true)
 	if world != null:
 		gridPos = world.world_to_map(get_pos())
@@ -115,7 +132,7 @@ func order_move_to(x, y):
 
 
 func update_next_spot():
-	var pos = world.map_to_world(Vector2(path[0].x, path[0].y)) + Vector2(0, floor(world.get_cell_size().y / 2) - 1)
+	var pos = world.map_to_world(Vector2(path[0].x, path[0].y)) + Vector2(0, world.get_cell_size().y / 2 - 1)
 	nextSpot = Vector2(pos.x, pos.y)
 	nextHeight = world.get_tile_height(path[0].x, path[0].y)
 	

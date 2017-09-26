@@ -8,6 +8,8 @@ var areaOffset
 
 var offset
 
+signal has_moved
+
 var locked = false
 
 func start():
@@ -37,6 +39,7 @@ func _input(ev):
 			translate(Vector2(mx, my))
 			gridPos.x += 1
 			set_offset(Vector2(0, offset-world.get_tile_height(gridPos.x, gridPos.y)))
+			emit_signal("has_moved")
 
 	elif ev.is_action_pressed("ui_left"):
 		var n = world.get_cell(gridPos.x - 1, gridPos.y)
@@ -45,6 +48,7 @@ func _input(ev):
 			translate(Vector2(-mx, -my))
 			gridPos.x -= 1
 			set_offset(Vector2(0, offset-world.get_tile_height(gridPos.x, gridPos.y)))
+			emit_signal("has_moved")
 	
 	elif ev.is_action_pressed("ui_up"):
 		
@@ -54,6 +58,7 @@ func _input(ev):
 			translate(Vector2(mx, -my))
 			gridPos.y -= 1
 			set_offset(Vector2(0, offset-world.get_tile_height(gridPos.x, gridPos.y)))
+			emit_signal("has_moved")
 
 	elif ev.is_action_pressed("ui_down"):
 		
@@ -63,6 +68,7 @@ func _input(ev):
 			translate(Vector2(-mx, my))
 			gridPos.y += 1
 			set_offset(Vector2(0, offset-world.get_tile_height(gridPos.x, gridPos.y)))
+			emit_signal("has_moved")
 
 func teleport_to(x, y):
 	var pos = world.map_to_world(Vector2(x, y))

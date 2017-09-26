@@ -1,0 +1,68 @@
+[gd_scene load_steps=3 format=1]
+
+[ext_resource path="res://04B_03__.fnt" type="BitmapFont" id=1]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends Node2D
+
+onready var tween = get_node(\"Tween\")
+var targetPos
+
+var step = 0
+
+var dying = false
+
+func _ready():
+	targetPos = get_pos() - Vector2(0, 24)
+	set_process(true)
+
+func _process(dt):
+	var motion = targetPos - get_pos()
+	translate(motion / 8)
+	
+	if dying:
+		var o = get_opacity()
+		
+		if o <= 0:
+			queue_free()
+		
+		set_opacity(o - 0.02)
+	
+	else:
+		if motion.y < 0.1:
+			targetPos.y -= 50
+			dying = true"
+
+[node name="DamagePopup" type="Node2D"]
+
+transform/pos = Vector2( 67, 95 )
+script/script = SubResource( 1 )
+
+[node name="Value" type="Label" parent="."]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 0
+margin/left = -30.0
+margin/top = -10.0
+margin/right = 10.0
+margin/bottom = 10.0
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "99"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+
+[node name="Tween" type="Tween" parent="."]
+
+playback/process_mode = 1
+playback/active = false
+playback/repeat = false
+playback/speed = 1.0
+
+
