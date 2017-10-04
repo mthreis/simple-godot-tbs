@@ -1,0 +1,18 @@
+[gd_resource type="CanvasItemShader" format=1]
+
+[resource]
+
+_code = {
+"fragment": "uniform color top;
+uniform color bottom;
+
+color diff = bottom - top;
+
+COLOR = top + diff * UV.y;",
+"fragment_ofs": 0,
+"light": "",
+"light_ofs": 0,
+"vertex": "",
+"vertex_ofs": 0
+}
+

@@ -1,41 +1,28 @@
-[gd_scene load_steps=23 format=1]
+[gd_scene load_steps=25 format=1]
 
-[ext_resource path="res://px.png" type="Texture" id=1]
-[ext_resource path="res://Data/Tilesets/Grasslands.tres" type="TileSet" id=2]
-[ext_resource path="res://Data/Scripts/World.gd" type="Script" id=3]
-[ext_resource path="res://Data/Tilesets/Collilder.tres" type="TileSet" id=4]
-[ext_resource path="res://Data/Textures/Sprites/Actors/Actor.png" type="Texture" id=5]
-[ext_resource path="res://Data/Scripts/Actor.gd" type="Script" id=6]
-[ext_resource path="res://Data/Animations/ActorMovement.tres" type="Animation" id=7]
-[ext_resource path="res://Data/Textures/Sprites/World/Tree.png" type="Texture" id=8]
-[ext_resource path="res://Data/Scripts/OpacityItems.gd" type="Script" id=9]
-[ext_resource path="res://Data/Scripts/ScalableCamera.gd" type="Script" id=10]
-[ext_resource path="res://Data/Prefabs/Battle/BattleManager.tscn" type="PackedScene" id=11]
+[ext_resource path="res://assets/materials/gradient.tres" type="Shader" id=1]
+[ext_resource path="res://px.png" type="Texture" id=2]
+[ext_resource path="res://Data/Tilesets/Grasslands.tres" type="TileSet" id=3]
+[ext_resource path="res://Data/Scripts/World.gd" type="Script" id=4]
+[ext_resource path="res://Data/Tilesets/Collilder.tres" type="TileSet" id=5]
+[ext_resource path="res://Data/Textures/Sprites/Actors/Actor.png" type="Texture" id=6]
+[ext_resource path="res://Data/Scripts/Actor.gd" type="Script" id=7]
+[ext_resource path="res://Data/Animations/ActorMovement.tres" type="Animation" id=8]
+[ext_resource path="res://Data/Textures/Sprites/Actors/ActorNaMerda.png" type="Texture" id=9]
+[ext_resource path="res://Data/Textures/Sprites/World/Tree.png" type="Texture" id=10]
+[ext_resource path="res://Data/Scripts/OpacityItems.gd" type="Script" id=11]
+[ext_resource path="res://Data/Scripts/ScalableCamera.gd" type="Script" id=12]
+[ext_resource path="res://Data/Prefabs/Battle/BattleManager.tscn" type="PackedScene" id=13]
+[ext_resource path="res://crl.png" type="Texture" id=14]
 
-[sub_resource type="CanvasItemShader" id=1]
+[sub_resource type="CanvasItemMaterial" id=1]
 
-_code = {
-"fragment": "uniform color top;
-uniform color bottom;
-
-color diff = bottom - top;
-
-COLOR = top + diff * UV.y;",
-"fragment_ofs": 0,
-"light": "",
-"light_ofs": 0,
-"vertex": "",
-"vertex_ofs": 0
-}
-
-[sub_resource type="CanvasItemMaterial" id=2]
-
-shader/shader = SubResource( 1 )
+shader/shader = ExtResource( 1 )
 shader/shading_mode = 0
 shader_param/top = Color( 0.200119, 0.509986, 0.839844, 1 )
 shader_param/bottom = Color( 0.711136, 0.739194, 0.761719, 1 )
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 
 length = 0.1
 loop = false
@@ -51,7 +38,7 @@ tracks/0/keys = {
 "values": [ 4 ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
 
 length = 0.1
 loop = false
@@ -67,7 +54,7 @@ tracks/0/keys = {
 "values": [ 12 ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=4]
 
 length = 0.1
 loop = false
@@ -83,7 +70,7 @@ tracks/0/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=5]
 
 length = 0.1
 loop = false
@@ -99,7 +86,7 @@ tracks/0/keys = {
 "values": [ 8 ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=6]
 
 length = 1.0
 loop = true
@@ -115,7 +102,7 @@ tracks/0/keys = {
 "values": [ 4, 5, 6, 7 ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=7]
 
 length = 1.0
 loop = true
@@ -131,7 +118,7 @@ tracks/0/keys = {
 "values": [ 12, 13, 14, 15 ]
 }
 
-[sub_resource type="Animation" id=9]
+[sub_resource type="Animation" id=8]
 
 length = 1.0
 loop = true
@@ -147,12 +134,12 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3 ]
 }
 
-[sub_resource type="RectangleShape2D" id=10]
+[sub_resource type="RectangleShape2D" id=9]
 
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
 
-[sub_resource type="GDScript" id=11]
+[sub_resource type="GDScript" id=10]
 
 script/source = "extends KinematicBody2D
 
@@ -172,24 +159,25 @@ func _process(dt):
 
 [node name="Background" type="TextureFrame" parent="."]
 
-material/material = SubResource( 2 )
+material/material = SubResource( 1 )
 focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
-margin/left = -194.0
+margin/left = -210.0
 margin/top = -35.0
-margin/right = 130.0
+margin/right = 154.0
 margin/bottom = 243.0
-texture = ExtResource( 1 )
+texture = ExtResource( 2 )
 modulate = Color( 0.105957, 0.168751, 0.242188, 1 )
 expand = true
 stretch_mode = 0
 
 [node name="World" type="TileMap" parent="."]
 
+editor/display_folded = true
 mode = 1
-tile_set = ExtResource( 2 )
+tile_set = ExtResource( 3 )
 cell/size = Vector2( 24, 12 )
 cell/quadrant_size = 16
 cell/custom_transform = Matrix32( 1, 0, 0, 1, 0, 0 )
@@ -203,13 +191,13 @@ collision/layers = 1
 collision/mask = 1
 occluder/light_mask = 1
 tile_data = IntArray( 131079, 3, 131080, 3, 131081, 3, 196614, 2, 196615, 2, 196616, 2, 196617, 3, 196618, 1, 262149, 2, 262150, 2, 262151, 1, 262152, 2, 262153, 1, 262154, 0, 262155, 1, 327684, 3, 327685, 2, 327686, 1, 327687, 0, 327688, 0, 327689, 0, 327690, 0, 327691, 1, 327692, 1, 393221, 2, 393222, 1, 393223, 0, 393224, 1, 393225, 0, 393226, 0, 393227, 1, 393228, 1, 393229, 1, 458757, 3, 458758, 2, 458759, 0, 458760, 0, 458761, 0, 458762, 0, 458763, 0, 458764, 1, 458765, 1, 458766, 1, 524293, 1, 524294, 1, 524295, 0, 524296, 1, 524297, 0, 524298, 0, 524299, 0, 524300, 0, 524301, 1, 524302, 1, 589830, 1, 589831, 1, 589832, 0, 589833, 0, 589834, 0, 589835, 0, 589836, 0, 589837, 1, 589838, 1, 655367, 2, 655368, 1, 655369, 0, 655370, 0, 655371, 0, 655372, 1, 655373, 1, 655374, 1, 720903, 3, 720904, 2, 720905, 1, 720906, 1, 720907, 1, 720908, 1, 720909, 1, 786439, 3, 786440, 2, 786441, 2, 786442, 1, 786443, 1, 786444, 1, 851978, 1, 851979, 1, 917514, 1, 917515, 1, 983050, 0, 983051, 0, 1048585, 0, 1048586, 0, 1048587, 0, 1048588, 1, 1114120, 2, 1114121, 0, 1114122, 0, 1114123, 1, 1114124, 1, 1114125, 1, 1179654, 3, 1179655, 3, 1179656, 2, 1179657, 0, 1179658, 1, 1179659, 1, 1179660, 1, 1179661, 1, 1179662, 1, 1245191, 2, 1245192, 2, 1245193, 1, 1245194, 1, 1245195, 1, 1245196, 1, 1245197, 1, 1245198, 0, 1310728, 2, 1310729, 2, 1310730, 1, 1310731, 1, 1310732, 1, 1310733, 0, 1310734, 1, 1376264, 3, 1376265, 2, 1376266, 2, 1376267, 1, 1376268, 0, 1376269, 0, 1376270, 0, 1441802, 2, 1441803, 0, 1441804, 0, 1441805, 0 )
-script/script = ExtResource( 3 )
+script/script = ExtResource( 4 )
 
 [node name="Collider" type="TileMap" parent="World"]
 
 z/z = 99
 mode = 1
-tile_set = ExtResource( 4 )
+tile_set = ExtResource( 5 )
 cell/size = Vector2( 24, 12 )
 cell/quadrant_size = 16
 cell/custom_transform = Matrix32( 1, 0, 0, 1, 0, 0 )
@@ -228,20 +216,14 @@ tile_data = IntArray(  )
 "Actors",
 ]]
 
-editor/display_folded = true
 transform/pos = Vector2( 12, 96 )
-texture = ExtResource( 5 )
+texture = ExtResource( 6 )
 offset = Vector2( 0, -6 )
 vframes = 4
 hframes = 4
-frame = 12
-script/script = ExtResource( 6 )
-attackRange = 5
-damage = 10
-chance = 97
-defense = 2
-maxHP = 24
-maxMP = 4
+frame = 4
+script/script = ExtResource( 7 )
+reference = "vladimir"
 name = "DudeA"
 group = 0
 move = 4
@@ -251,18 +233,44 @@ move = 4
 playback/process_mode = 1
 playback/default_blend_time = 0.0
 root/root = NodePath("..")
-anims/idle_down = SubResource( 3 )
-anims/idle_left = SubResource( 4 )
-anims/idle_right = SubResource( 5 )
-anims/idle_up = SubResource( 6 )
-anims/move_down = SubResource( 7 )
-anims/move_left = SubResource( 8 )
-anims/move_right = SubResource( 9 )
-anims/move_up = ExtResource( 7 )
+anims/idle_down = SubResource( 2 )
+anims/idle_left = SubResource( 3 )
+anims/idle_right = SubResource( 4 )
+anims/idle_up = SubResource( 5 )
+anims/move_down = SubResource( 6 )
+anims/move_left = SubResource( 7 )
+anims/move_right = SubResource( 8 )
+anims/move_up = ExtResource( 8 )
 playback/active = true
 playback/speed = 1.5
 blend_times = [  ]
 autoplay = ""
+
+[node name="regular" type="Sprite" parent="World/Actor/Anim"]
+
+visibility/visible = false
+transform/pos = Vector2( 12, 96 )
+texture = ExtResource( 6 )
+offset = Vector2( 0, -6 )
+vframes = 4
+hframes = 4
+frame = 3
+
+[node name="wounded" type="Sprite" parent="World/Actor/Anim"]
+
+visibility/visible = false
+transform/pos = Vector2( 12, 96 )
+texture = ExtResource( 9 )
+offset = Vector2( 0, -4 )
+vframes = 4
+frame = 3
+
+[node name="Timer" type="Timer" parent="World/Actor"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = false
 
 [node name="Actor1" type="Sprite" parent="World" groups=[
 "Actors",
@@ -270,18 +278,13 @@ autoplay = ""
 
 editor/display_folded = true
 transform/pos = Vector2( 24, 101 )
-texture = ExtResource( 5 )
+texture = ExtResource( 6 )
 offset = Vector2( 0, -6 )
 vframes = 4
 hframes = 4
 frame = 11
-script/script = ExtResource( 6 )
-attackRange = 2
-damage = 10
-chance = 85
-defense = 6
-maxHP = 25
-maxMP = 4
+script/script = ExtResource( 7 )
+reference = "orc"
 name = "DudeB"
 group = 0
 move = 4
@@ -291,18 +294,25 @@ move = 4
 playback/process_mode = 1
 playback/default_blend_time = 0.0
 root/root = NodePath("..")
-anims/idle_down = SubResource( 3 )
-anims/idle_left = SubResource( 4 )
-anims/idle_right = SubResource( 5 )
-anims/idle_up = SubResource( 6 )
-anims/move_down = SubResource( 7 )
-anims/move_left = SubResource( 8 )
-anims/move_right = SubResource( 9 )
-anims/move_up = ExtResource( 7 )
+anims/idle_down = SubResource( 2 )
+anims/idle_left = SubResource( 3 )
+anims/idle_right = SubResource( 4 )
+anims/idle_up = SubResource( 5 )
+anims/move_down = SubResource( 6 )
+anims/move_left = SubResource( 7 )
+anims/move_right = SubResource( 8 )
+anims/move_up = ExtResource( 8 )
 playback/active = true
 playback/speed = 1.5
 blend_times = [  ]
 autoplay = ""
+
+[node name="Timer" type="Timer" parent="World/Actor1"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = false
 
 [node name="Actor2" type="Sprite" parent="World" groups=[
 "Actors",
@@ -310,18 +320,13 @@ autoplay = ""
 
 editor/display_folded = true
 transform/pos = Vector2( 36, 107 )
-texture = ExtResource( 5 )
+texture = ExtResource( 6 )
 offset = Vector2( 0, -6 )
 vframes = 4
 hframes = 4
 modulate = Color( 0.210358, 0.121094, 1, 1 )
-script/script = ExtResource( 6 )
-attackRange = 1
-damage = 10
-chance = 68
-defense = 3
-maxHP = 35
-maxMP = 4
+script/script = ExtResource( 7 )
+reference = "orc"
 name = "DudeC"
 group = 1
 move = 4
@@ -331,18 +336,25 @@ move = 4
 playback/process_mode = 1
 playback/default_blend_time = 0.0
 root/root = NodePath("..")
-anims/idle_down = SubResource( 3 )
-anims/idle_left = SubResource( 4 )
-anims/idle_right = SubResource( 5 )
-anims/idle_up = SubResource( 6 )
-anims/move_down = SubResource( 7 )
-anims/move_left = SubResource( 8 )
-anims/move_right = SubResource( 9 )
-anims/move_up = ExtResource( 7 )
+anims/idle_down = SubResource( 2 )
+anims/idle_left = SubResource( 3 )
+anims/idle_right = SubResource( 4 )
+anims/idle_up = SubResource( 5 )
+anims/move_down = SubResource( 6 )
+anims/move_left = SubResource( 7 )
+anims/move_right = SubResource( 8 )
+anims/move_up = ExtResource( 8 )
 playback/active = true
 playback/speed = 1.5
 blend_times = [  ]
 autoplay = ""
+
+[node name="Timer" type="Timer" parent="World/Actor2"]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = false
 
 [node name="Tree1" type="Sprite" parent="World"]
 
@@ -350,25 +362,25 @@ editor/display_folded = true
 visibility/visible = false
 transform/pos = Vector2( 24, 103 )
 z/z = 1
-texture = ExtResource( 8 )
+texture = ExtResource( 10 )
 offset = Vector2( 0, -14 )
-script/script = ExtResource( 9 )
+script/script = ExtResource( 11 )
 
 [node name="Opacity" type="KinematicBody2D" parent="World/Tree1"]
 
 transform/pos = Vector2( -1, -19 )
 input/pickable = false
-shapes/0/shape = SubResource( 10 )
+shapes/0/shape = SubResource( 9 )
 shapes/0/transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 shapes/0/trigger = true
 collision/layers = 1
 collision/mask = 1
 collision/margin = 0.08
-script/script = SubResource( 11 )
+script/script = SubResource( 10 )
 
 [node name="Shape" type="CollisionShape2D" parent="World/Tree1/Opacity"]
 
-shape = SubResource( 10 )
+shape = SubResource( 9 )
 trigger = true
 _update_shape_index = 0
 
@@ -391,13 +403,18 @@ drag_margin/left = 0.2
 drag_margin/top = 0.2
 drag_margin/right = 0.2
 drag_margin/bottom = 0.2
-script/script = ExtResource( 10 )
+script/script = ExtResource( 12 )
 scalingReference = null
 
-[node name="BattleManager" parent="." instance=ExtResource( 11 )]
+[node name="BattleManager" parent="." instance=ExtResource( 13 )]
 
 enemyColor = null
 allyColor = null
+
+[node name="Sprite" type="Sprite" parent="."]
+
+transform/pos = Vector2( -11, 63 )
+texture = ExtResource( 14 )
 
 [connection signal="item_rect_changed" from="Camera" to="Camera" method="_on_Camera_item_rect_changed"]
 

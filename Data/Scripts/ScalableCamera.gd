@@ -22,7 +22,7 @@ func _process(dt):
 	#if _target != null:
 	var previousZoom = zoom
 		
-	zoom = max(1.0, floor(OS.get_window_size().x / 240.0))
+	zoom = max(1.0, floor(OS.get_window_size().x / 280.0))
 	
 	
 	if target != null:
@@ -47,8 +47,8 @@ func _process(dt):
 	#b.set_scale(Vector2(z, z))
 	#b.set_size(b.originalSize / z)
 	
-	if Input.is_key_pressed(KEY_R):
-		OS.set_window_fullscreen(!OS.get_window_fullscreen())
+	#if Input.is_key_pressed(KEY_R):
+	#	OS.set_window_fullscreen(!OS.get_window_fullscreen())
 	#set_scale(
 	pass
 

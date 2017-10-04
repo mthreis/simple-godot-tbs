@@ -4,8 +4,8 @@ onready var world = get_node("../World")
 
 const STATE_NAVIGATION = 0
 const STATE_MOVE = 2
-const STATE_WAIT_MOVE = 5
 const STATE_ACT = 3
+const STATE_WAIT_MOVE = 5
 const STATE_WAIT = 6
 
 export var height = 1
@@ -141,6 +141,7 @@ func on_cursor_has_moved():
 		h.get_node("Actor").set_text(str(found.name))
 		h.get_node("HP/Value").set_text(str(found.HP, "/", found.maxHP))
 		h.get_node("MP/Value").set_text(str(found.MP, "/", found.maxMP))
+		h.get_node("Level/Value").set_text(str(found.level))
 		
 		var color
 		

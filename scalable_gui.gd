@@ -7,6 +7,7 @@ var pos = Vector2()
 var manager
 var active = false
 
+
 func _ready():
 	set_process_input(true)
 	update_pos()

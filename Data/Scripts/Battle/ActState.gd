@@ -5,13 +5,15 @@ var actor
 var world
 
 var caller
-
+var actorHitInfo
 var markers = []
+
+var isAttacking = false
 
 var spots
 var targettableUnits = []
 var tween
-
+var waitForAttack = false
 var color = 0.0
 
 var cursorPos
@@ -37,9 +39,11 @@ func on_cursor_has_moved():
 	if found != null:
 		#print("Found ", found.name)
 		
+		actorHitInfo = actor.get_hit_info(found)
+		
 		h.set_hidden(false)
-		h.get_node("Damage/Value").set_text(str(actor.damage - found.defense))
-		h.get_node("Chance/Value").set_text(str(actor.chance))
+		h.get_node("Damage/Value").set_text(str(actorHitInfo["damage"]))
+		h.get_node("Chance/Value").set_text(str(actorHitInfo["chance"]))
 	else:
 		h.set_hidden(true)
 
@@ -88,29 +92,71 @@ func _input(ev):
 			manager.cursor.locked = true
 			manager.cursor.teleport_to_v(actor.gridPos)
 			
+			var h = manager.actorInfo
+			h.set_hidden(false)
+			h.get_node("Actor").set_text(str(actor.name))
+			h.get_node("HP/Value").set_text(str(actor.HP, "/", actor.maxHP))
+			h.get_node("MP/Value").set_text(str(actor.MP, "/", actor.maxMP))
+			
+			cleanup()
 			end()
 	
 	elif ev.is_action_pressed("ui_accept"):
 		if found != null:
-			found.HP -= actor.damage
+			actor.start_attack(found, actorHitInfo)
+			waitForAttack = true
+			
 			manager.hitInfo.set_hidden(true)
-			get_tree().set_input_as_handled()
+			manager.cursor.set_hidden(true)
 			manager.cursor.locked = true
-			manager.cursor.teleport_to_v(actor.gridPos)
-			end()
+			
+			cleanup()
+			
+#			get_tree().set_input_as_handled()
+#			manager.cursor.locked = true
+#			manager.cursor.teleport_to_v(actor.gridPos)
+#			
+#			var h = manager.actorInfo
+#			h.set_hidden(false)
+#			h.get_node("Actor").set_text(str(actor.name))
+#			h.get_node("HP/Value").set_text(str(actor.HP, "/", actor.maxHP))
+#			h.get_node("MP/Value").set_text(str(actor.MP, "/", actor.maxMP))
+#			
+#			var dam = preload("res://Data/Prefabs/Battle/DamagePopup.tscn").instance()
+#			dam.get_node("Value").set_text(str(d))
+#			found.add_child(dam)
+			
+			
+			#end()
 
-func _process(dt):
-	for i in targettableUnits:
-		i.set_modulate(Color(0.8, color, color, 1.0))
-
-func end():
+func cleanup():
 	for i in markers:
 		i.queue_free()
 	
-	#spots.clear()
-	
 	for i in targettableUnits:
 		i.set_modulate(Color(1.0, 1.0, 1.0, 1.0))
+
+func _process(dt):
+	
+	if waitForAttack:
+		if !actor.isAttacking:
+			end()
+	else:
+		for i in targettableUnits:
+			i.set_modulate(Color(0.8, color, color, 1.0))
+
+func end():
+	#for i in markers:
+	#	i.queue_free()
+	
+	#spots.clear()
+	
+	#for i in targettableUnits:
+	#	i.set_modulate(Color(1.0, 1.0, 1.0, 1.0))
+	
+	manager.cursor.set_hidden(false)
+	manager.cursor.teleport_to_v(actor.gridPos)
+	
 	
 	if caller != null:
 		caller.activate(true)

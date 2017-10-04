@@ -31,6 +31,16 @@ func _input(ev):
 	var mx = cSize.x / 2
 	var my = cSize.y / 2
 	
+	
+	if ev.is_action_pressed("ui_select"):
+		var u = world.get_unit_at(gridPos)
+		
+		if u:
+			var r = Database.get_handheld(u.rHand)
+			
+			if r:
+				print("The guy's ", u.name, " and his RHand is ", r.name, " damage: ", r.damage)
+	
 	if ev.is_action_pressed("ui_right"):
 		
 		var n = world.get_cell(gridPos.x + 1, gridPos.y)

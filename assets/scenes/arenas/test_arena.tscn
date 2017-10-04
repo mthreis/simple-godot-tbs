@@ -1,0 +1,128 @@
+[gd_scene load_steps=8 format=1]
+
+[ext_resource path="res://assets/materials/gradient.tres" type="Shader" id=1]
+[ext_resource path="res://px.png" type="Texture" id=2]
+[ext_resource path="res://assets/tilesets/arena.tres" type="TileSet" id=3]
+[ext_resource path="res://assets/tilesets/grasslands.tres" type="TileSet" id=4]
+[ext_resource path="res://assets/prefabs/cyborg.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Sprite-0004.png" type="Texture" id=6]
+
+[sub_resource type="CanvasItemMaterial" id=1]
+
+shader/shader = ExtResource( 1 )
+shader/shading_mode = 0
+shader_param/top = Color( 0.248909, 0.204849, 0.292969, 1 )
+shader_param/bottom = Color( 0.0282059, 0.026123, 0.03125, 1 )
+
+[node name="Node" type="Node"]
+
+[node name="canvas" type="CanvasLayer" parent="."]
+
+layer = -1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+
+[node name="background" type="TextureFrame" parent="canvas"]
+
+material/material = SubResource( 1 )
+anchor/right = 1
+anchor/bottom = 1
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 0.0
+margin/top = 0.0
+margin/right = 0.0
+margin/bottom = 0.0
+texture = ExtResource( 2 )
+expand = true
+stretch_mode = 0
+
+[node name="arena" type="TileMap" parent="."]
+
+mode = 1
+tile_set = ExtResource( 3 )
+cell/size = Vector2( 32, 16 )
+cell/quadrant_size = 16
+cell/custom_transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+cell/half_offset = 2
+cell/tile_origin = 0
+cell/y_sort = false
+collision/use_kinematic = false
+collision/friction = 1.0
+collision/bounce = 0.0
+collision/layers = 1
+collision/mask = 1
+occluder/light_mask = 1
+tile_data = IntArray( -196612, 0, -196611, 0, -196610, 0, -196609, 0, -262144, 2, -262143, 1, -262142, 3, -262141, 0, -262140, 0, -262139, 0, -131076, 0, -65540, 0, -4, 0, 65532, 0, 131068, 0, 196604, 0, 262140, 0 )
+
+[node name="terrain" type="TileMap" parent="."]
+
+mode = 1
+tile_set = ExtResource( 4 )
+cell/size = Vector2( 32, 16 )
+cell/quadrant_size = 16
+cell/custom_transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+cell/half_offset = 2
+cell/tile_origin = 0
+cell/y_sort = false
+collision/use_kinematic = false
+collision/friction = 1.0
+collision/bounce = 0.0
+collision/layers = 1
+collision/mask = 1
+occluder/light_mask = 1
+tile_data = IntArray( -131075, 5, -131074, 5, -131073, 2, -196608, 0, -196607, 2, -196606, 7, -196605, 3, -196604, 2, -196603, 3, -65539, 5, -65538, 2, -65537, 2, -131072, 0, -131071, 2, -131070, 7, -131069, 2, -131068, 0, -131067, 1, -3, 2, -2, 1, -1, 0, -65536, 0, -65535, 1, -65534, 6, -65533, 1, -65532, 0, -65531, 0, 65533, 1, 65534, 1, 65535, 1, 0, 1, 1, 1, 2, 6, 3, 1, 4, 0, 5, 0, 131069, 6, 131070, 6, 131071, 6, 65536, 6, 65537, 6, 65538, 6, 65539, 1, 65540, 0, 65541, 0, 196605, 1, 196606, 1, 196607, 1, 131072, 1, 131073, 6, 131074, 1, 131075, 1, 131076, 0, 131077, 1, 262141, 4, 262142, 3, 262143, 2, 196608, 2, 196609, 2, 196610, 2, 196611, 2, 196612, 2, 196613, 2 )
+
+[node name="cyborg" parent="terrain" instance=ExtResource( 5 )]
+
+transform/pos = Vector2( 16, 3 )
+
+[node name="camera" type="Camera2D" parent="."]
+
+transform/pos = Vector2( 15, -30 )
+anchor_mode = 1
+rotating = false
+current = true
+zoom = Vector2( 0.5, 0.5 )
+limit/left = -10000000
+limit/top = -10000000
+limit/right = 10000000
+limit/bottom = 10000000
+drag_margin/h_enabled = true
+drag_margin/v_enabled = true
+smoothing/enable = false
+smoothing/speed = 5.0
+drag_margin/left = 0.2
+drag_margin/top = 0.2
+drag_margin/right = 0.2
+drag_margin/bottom = 0.2
+
+[node name="Sprite" type="Sprite" parent="."]
+
+transform/pos = Vector2( -18, -36 )
+texture = ExtResource( 6 )
+
+[node name="Sprite1" type="Sprite" parent="."]
+
+transform/pos = Vector2( -2, -49 )
+texture = ExtResource( 6 )
+
+[node name="Sprite4" type="Sprite" parent="."]
+
+transform/pos = Vector2( -52, -35 )
+texture = ExtResource( 6 )
+
+[node name="Sprite2" type="Sprite" parent="."]
+
+transform/pos = Vector2( -19, -75 )
+texture = ExtResource( 6 )
+
+[node name="Sprite3" type="Sprite" parent="."]
+
+transform/pos = Vector2( -83, -14 )
+texture = ExtResource( 6 )
+
+

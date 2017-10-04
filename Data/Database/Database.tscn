@@ -1,0 +1,95 @@
+[gd_scene load_steps=5 format=1]
+
+[ext_resource path="res://Data/Database/Database.gd" type="Script" id=1]
+[ext_resource path="res://Data/Database/Handheld.gd" type="Script" id=2]
+[ext_resource path="res://Data/Database/Accessory.gd" type="Script" id=3]
+[ext_resource path="res://Data/Database/ActorRef.gd" type="Script" id=4]
+
+[node name="Database" type="Node"]
+
+script/script = ExtResource( 1 )
+
+[node name="Equipments" type="Node" parent="."]
+
+[node name="Handhelds" type="Node" parent="Equipments"]
+
+[node name="Weapons" type="Node" parent="Equipments/Handhelds"]
+
+[node name="wooden_sword" type="Node" parent="Equipments/Handhelds/Weapons"]
+
+script/script = ExtResource( 2 )
+name = "Wooden Sword"
+type = "sword"
+damageType = "physical"
+damage = 14
+radius = 1
+evasion = 0
+
+[node name="javelin" type="Node" parent="Equipments/Handhelds/Weapons"]
+
+script/script = ExtResource( 2 )
+name = "Javelin"
+type = "spear"
+damageType = "physical"
+damage = 15
+radius = 2
+evasion = 3
+
+[node name="Shields" type="Node" parent="Equipments/Handhelds"]
+
+[node name="wooden_shield" type="Node" parent="Equipments/Handhelds/Shields"]
+
+script/script = ExtResource( 2 )
+name = "Wooden Shield"
+type = "shield"
+damageType = "physical"
+damage = 0
+radius = 0
+evasion = 6
+
+[node name="Accessories" type="Node" parent="Equipments"]
+
+[node name="boots_of_haste" type="Node" parent="Equipments/Accessories"]
+
+script/script = ExtResource( 3 )
+type = "true"
+bonusHP = 0
+bonusMP = 0
+bonusStr = 0
+bonusDex = 0
+bonusMag = 0
+statusEffect = ""
+
+[node name="Actors" type="Node" parent="."]
+
+[node name="vladimir" type="Node" parent="Actors"]
+
+script/script = ExtResource( 4 )
+name = "Vladimir"
+level = 14
+maxHP = 43
+maxMP = 11
+strength = 45
+dexterity = 12
+wisdom = 7
+resistance = 10
+rHand = "wooden_sword"
+lHand = ""
+accessory = ""
+
+[node name="orc" type="Node" parent="Actors"]
+
+script/script = ExtResource( 4 )
+name = "Orc"
+level = 20
+maxHP = 62
+maxMP = 0
+strength = 45
+dexterity = 9
+wisdom = 1
+resistance = 3
+rHand = "javelin"
+lHand = ""
+accessory = ""
+
+

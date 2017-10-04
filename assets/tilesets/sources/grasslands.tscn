@@ -1,0 +1,96 @@
+[gd_scene load_steps=4 format=1]
+
+[ext_resource path="res://assets/textures/tilesets/grasslands.png" type="Texture" id=1]
+[ext_resource path="res://assets/textures/tilesets/water.png" type="Texture" id=2]
+[ext_resource path="res://assets/textures/tilesets/wooden_bridge.png" type="Texture" id=3]
+
+[node name="Node" type="Node"]
+
+[node name="0H_grassDark" type="Sprite" parent="."]
+
+transform/pos = Vector2( 119, 0 )
+texture = ExtResource( 1 )
+centered = false
+offset = Vector2( 0, -36 )
+hframes = 6
+
+[node name="0H_grassDark1" type="Sprite" parent="."]
+
+transform/pos = Vector2( 32, 0 )
+texture = ExtResource( 1 )
+centered = false
+offset = Vector2( 0, -36 )
+hframes = 6
+frame = 1
+
+[node name="0H_grassDark2" type="Sprite" parent="."]
+
+transform/pos = Vector2( 32, 0 )
+texture = ExtResource( 1 )
+centered = false
+offset = Vector2( 0, -36 )
+hframes = 6
+frame = 2
+
+[node name="0H_grassDark3" type="Sprite" parent="."]
+
+transform/pos = Vector2( 32, 0 )
+texture = ExtResource( 1 )
+centered = false
+offset = Vector2( 0, -36 )
+hframes = 6
+frame = 3
+
+[node name="0H_grassDark4" type="Sprite" parent="."]
+
+transform/pos = Vector2( 32, 0 )
+texture = ExtResource( 1 )
+centered = false
+offset = Vector2( 0, -36 )
+hframes = 6
+frame = 4
+
+[node name="0H_grassDark5" type="Sprite" parent="."]
+
+transform/pos = Vector2( 32, 0 )
+texture = ExtResource( 1 )
+centered = false
+offset = Vector2( 0, -36 )
+hframes = 6
+frame = 5
+
+[node name="water1" type="Sprite" parent="."]
+
+transform/pos = Vector2( 137, 67 )
+texture = ExtResource( 2 )
+centered = false
+offset = Vector2( 0, -12 )
+hframes = 2
+
+[node name="water2" type="Sprite" parent="."]
+
+transform/pos = Vector2( 170, 66 )
+texture = ExtResource( 2 )
+centered = false
+offset = Vector2( 0, -12 )
+hframes = 2
+frame = 1
+
+[node name="water3" type="Sprite" parent="."]
+
+transform/pos = Vector2( 208, 60 )
+texture = ExtResource( 3 )
+centered = false
+offset = Vector2( 0, -12 )
+hframes = 2
+frame = 1
+
+[node name="water4" type="Sprite" parent="."]
+
+transform/pos = Vector2( 247, 58 )
+texture = ExtResource( 3 )
+centered = false
+offset = Vector2( 0, -12 )
+hframes = 2
+
+

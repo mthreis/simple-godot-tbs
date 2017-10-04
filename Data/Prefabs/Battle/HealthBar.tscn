@@ -1,0 +1,98 @@
+[gd_scene load_steps=4 format=1]
+
+[ext_resource path="res://Data/Textures/Sprites/UI/HealthBar.png" type="Texture" id=1]
+[ext_resource path="res://Data/Textures/Sprites/UI/2Pixels.png" type="Texture" id=2]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends TextureFrame
+
+var maxHP
+var startHP
+var endHP
+
+var startRatio
+var endRatio
+var ratio
+
+var value
+var W
+var H
+
+func init(mHP, sHP, eHP):
+	maxHP = mHP
+	startHP = sHP
+	endHP = eHP
+
+func _ready():
+	value = get_node(\"Value\")
+	W = value.get_size().x
+	H = value.get_size().y
+	
+	startRatio = startHP / maxHP
+	endRatio = endHP / maxHP
+	
+	value.set_size(Vector2(startRatio * W, H))
+	
+	ratio = startRatio
+	set_process(true)
+	get_node(\"Tween\").interpolate_property(self, \"ratio\", startRatio, endRatio,  0.4, Tween.TRANS_EXPO, Tween.EASE_IN_OUT)
+	get_node(\"Tween\").start()
+	
+	get_node(\"Timer\").connect(\"timeout\", self, \"time_to_destroy\")
+	get_node(\"Timer\").set_wait_time(0.8)
+	get_node(\"Timer\").start()
+	
+
+func _process(delta):
+	value.set_size(Vector2(ratio * W, H))
+
+func time_to_destroy():
+	queue_free()
+
+"
+
+[node name="HealthBar" type="TextureFrame"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = -12.0
+margin/top = -28.0
+margin/right = 12.0
+margin/bottom = -24.0
+texture = ExtResource( 1 )
+stretch_mode = 0
+script/script = SubResource( 1 )
+
+[node name="Value" type="TextureFrame" parent="."]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 2.0
+margin/top = 1.0
+margin/right = 22.0
+margin/bottom = 3.0
+texture = ExtResource( 2 )
+modulate = Color( 0.75, 0.0791016, 0.0791016, 1 )
+expand = true
+stretch_mode = 0
+
+[node name="Tween" type="Tween" parent="."]
+
+playback/process_mode = 1
+playback/active = false
+playback/repeat = false
+playback/speed = 1.0
+
+[node name="Timer" type="Timer" parent="."]
+
+process_mode = 1
+wait_time = 1.0
+one_shot = false
+autostart = false
+
+
