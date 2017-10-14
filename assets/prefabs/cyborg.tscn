@@ -7,7 +7,7 @@
 [node name="cyborg" type="Node2D"]
 
 script/script = ExtResource( 1 )
-body = null
+body = "regular"
 
 [node name="sprite" type="Node2D" parent="."]
 

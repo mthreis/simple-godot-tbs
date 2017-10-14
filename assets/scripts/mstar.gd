@@ -87,7 +87,7 @@ func freecv(_pos):
 	freec(_pos.x, _pos.y)
 
 func flatten(_x, _y):
-	return _x * width + _y
+	return _x + _y * width
 
 func point_within(_x, _y):
 	return (_x >= 0 && _y >= 0 && _x < width  && _y < height)

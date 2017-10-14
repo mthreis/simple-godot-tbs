@@ -4,16 +4,75 @@
 
 [node name="Node" type="Node"]
 
-[node name="0H_grass" type="Sprite" parent="."]
+[node name="grass0" type="Sprite" parent="."]
 
+transform/pos = Vector2( -11, 1 )
 texture = ExtResource( 1 )
-hframes = 2
+centered = false
+offset = Vector2( 0, -42 )
+hframes = 8
+
+[node name="grass1" type="Sprite" parent="."]
+
+transform/pos = Vector2( 24, 6 )
+texture = ExtResource( 1 )
+centered = false
+offset = Vector2( 0, -42 )
+hframes = 8
 frame = 1
 
-[node name="0H_grassDark" type="Sprite" parent="."]
+[node name="grass2" type="Sprite" parent="."]
 
-transform/pos = Vector2( 32, 0 )
+transform/pos = Vector2( 2, -38 )
 texture = ExtResource( 1 )
-hframes = 2
+centered = false
+offset = Vector2( 0, -42 )
+hframes = 8
+frame = 2
+
+[node name="grass3" type="Sprite" parent="."]
+
+transform/pos = Vector2( -47, -25 )
+texture = ExtResource( 1 )
+centered = false
+offset = Vector2( 0, -42 )
+hframes = 8
+frame = 3
+
+[node name="grass4" type="Sprite" parent="."]
+
+transform/pos = Vector2( 52, -19 )
+texture = ExtResource( 1 )
+centered = false
+offset = Vector2( 0, -42 )
+hframes = 8
+frame = 4
+
+[node name="grass5" type="Sprite" parent="."]
+
+transform/pos = Vector2( 17, 56 )
+texture = ExtResource( 1 )
+centered = false
+offset = Vector2( 0, -42 )
+hframes = 8
+frame = 5
+
+[node name="grass6" type="Sprite" parent="."]
+
+transform/pos = Vector2( -47, 37 )
+texture = ExtResource( 1 )
+centered = false
+offset = Vector2( 0, -42 )
+hframes = 8
+frame = 6
+
+[node name="grass7" type="Sprite" parent="."]
+
+transform/pos = Vector2( 80, 26 )
+texture = ExtResource( 1 )
+centered = false
+offset = Vector2( 0, -42 )
+hframes = 8
+frame = 7
 
 

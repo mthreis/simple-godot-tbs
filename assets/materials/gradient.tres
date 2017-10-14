@@ -5,10 +5,12 @@
 _code = {
 "fragment": "uniform color top;
 uniform color bottom;
+uniform float shades;
 
+float s = 1.0 / shades;
 color diff = bottom - top;
 
-COLOR = top + diff * UV.y;",
+COLOR = top + diff * floor(UV.y / s) * s;",
 "fragment_ofs": 0,
 "light": "",
 "light_ofs": 0,

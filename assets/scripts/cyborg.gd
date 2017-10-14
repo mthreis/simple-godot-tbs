@@ -16,7 +16,7 @@ var badges = []
 
 var anim = "regular" setget set_anim, get_anim
 
-export(String, "chubby", "regular", "tall", "short") var body 
+export(String, "chubby", "regular", "tall") var body 
 
 #========================================= stuff
 
@@ -26,6 +26,11 @@ var sprite
 var rHand
 var lHand
 var accessory
+
+onready var world = get_parent()
+
+func _ready():
+	fix_sprites_offset()
 
 func set_anim(_anim):
 	anim = get_node("sprite/" + _anim)
@@ -37,3 +42,7 @@ func set_anim(_anim):
 
 func get_anim():
 	return anim
+
+func fix_sprites_offset():
+	for i in get_node("sprite").get_children():
+		i.set_offset(i.get_offset() + Vector2(0, world.get_cell_size().y / 2))

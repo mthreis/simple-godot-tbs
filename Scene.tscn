@@ -36,7 +36,7 @@ script/source = "extends TileMap
 # var a = 2
 # var b = \"textvar\""
 
-[sub_resource type="GDScript" id=5]
+[sub_resource type="GDScript" id=4]
 
 script/source = "extends Sprite
 
@@ -340,7 +340,7 @@ centered = false
 
 transform/pos = Vector2( 213, 194 )
 texture = ExtResource( 11 )
-script/script = SubResource( 5 )
+script/script = SubResource( 4 )
 
 [connection signal="item_rect_changed" from="CanvasLayer/userInterface1" to="CanvasLayer/userInterface1" method="_on_size_changed"]
 
