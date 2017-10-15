@@ -1,12 +1,13 @@
-[gd_scene load_steps=12 format=1]
+[gd_scene load_steps=14 format=1]
 
 [ext_resource path="res://assets/materials/gradient.tres" type="Shader" id=1]
 [ext_resource path="res://px.png" type="Texture" id=2]
 [ext_resource path="res://assets/tilesets/grasslands.tres" type="TileSet" id=3]
 [ext_resource path="res://assets/scripts/world.gd" type="Script" id=4]
 [ext_resource path="res://assets/tilesets/arena.tres" type="TileSet" id=5]
-[ext_resource path="res://assets/prefabs/cyborg.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Sprite-0004.png" type="Texture" id=7]
+[ext_resource path="res://assets/textures/battle/cursor.png" type="Texture" id=6]
+[ext_resource path="res://assets/prefabs/cyborg.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Sprite-0004.png" type="Texture" id=8]
 
 [sub_resource type="CanvasItemMaterial" id=1]
 
@@ -46,6 +47,79 @@ func _ready():
 	pass
 "
 
+[sub_resource type="GDScript" id=5]
+
+script/source = "extends Sprite
+
+onready var world = get_parent()
+var gridPos
+var locked = false
+
+var off = 0
+
+signal has_moved
+
+func _ready():
+	set_process_input(true)
+	world.fix_pos(self, -2)
+	
+	
+	if world != null:
+		gridPos = world.world_to_map(get_pos())
+		
+
+func _input(ev):
+	if world == null || locked:
+		return
+	
+	var cSize = world.get_cell_size()
+	var mx = cSize.x / 2
+	var my = cSize.y / 2
+	
+	
+	
+	
+	if ev.is_action_pressed(\"ui_right\"):
+		var n = world.get_cell(gridPos.x + 1, gridPos.y)
+		
+		if n >= 0:
+			teleport_to(gridPos.x + 1, gridPos.y )
+			emit_signal(\"has_moved\")
+	
+	elif ev.is_action_pressed(\"ui_up\"):
+		var n = world.get_cell(gridPos.x , gridPos.y - 1)
+		
+		if n >= 0:
+			teleport_to(gridPos.x, gridPos.y - 1)
+			emit_signal(\"has_moved\")
+	
+	elif ev.is_action_pressed(\"ui_down\"):
+		var n = world.get_cell(gridPos.x , gridPos.y + 1)
+		
+		if n >= 0:
+			teleport_to(gridPos.x, gridPos.y + 1)
+			emit_signal(\"has_moved\")
+	
+	elif ev.is_action_pressed(\"ui_left\"):
+		var n = world.get_cell(gridPos.x - 1, gridPos.y)
+		
+		if n >= 0:
+			teleport_to(gridPos.x - 1, gridPos.y)
+			emit_signal(\"has_moved\")
+	
+	elif ev.is_action_pressed(\"ui_accept\"):
+		get_parent().get_node(\"cyborg\").teleport_to_v(gridPos)
+
+
+func teleport_to(x, y):
+	var pos = world.map_to_world(Vector2(x, y))
+	
+	gridPos = Vector2(x, y)
+	
+	set_pos(pos + Vector2(0, off))
+	var height = world.get_heightmap_at_v(gridPos)
+	get_node(\"sprite\").set_pos(Vector2(0, -height))"
+
 [sub_resource type="GDScript" id=4]
 
 script/source = "extends Node2D
@@ -56,17 +130,18 @@ var tilemap
 func _ready():
 	tilemap = get_parent()
 	s = get_node(\"../cyborg\")
-	set_process(true)
+	set_process_input(true)
 
-func _process(dt):
-	var mousePos = tilemap.world_to_map(get_global_mouse_pos())
-	
-	if tilemap.is_withinv(mousePos) && tilemap.get_cellv(mousePos) >= 0:
-		s.set_pos(tilemap.map_to_world(mousePos))
+func _input(ev):
+	if ev.is_action_pressed(\"ui_accept\"):
+		var mousePos = tilemap.world_to_map(get_global_mouse_pos())
 		
-		var height = tilemap.get_heightmap_at_v(mousePos)
-		
-		s.get_node(\"sprite\").set_pos(Vector2(0, -height))"
+		if tilemap.is_withinv(mousePos) && tilemap.get_cellv(mousePos) >= 0:
+			s.set_pos(tilemap.map_to_world(mousePos) + Vector2(0, 1))
+			
+			var height = tilemap.get_heightmap_at_v(mousePos)
+			
+			s.get_node(\"sprite\").set_pos(Vector2(0, -height))"
 
 [node name="Scene" type="Node"]
 
@@ -122,7 +197,7 @@ collision/bounce = 0.0
 collision/layers = 1
 collision/mask = 1
 occluder/light_mask = 1
-tile_data = IntArray( 0, 6, 1, 5, 2, 7, 4, 3, 5, 3, 65536, 4, 65540, 0, 131072, 1, 131073, 8, 131074, 1, 196608, 0, 196609, 0, 196610, 0, 262144, 5, 262145, 0, 262146, 0 )
+tile_data = IntArray( 0, 6, 1, 5, 3, 3, 4, 2, 65536, 4, 65539, 2, 65540, 1, 65541, 2, 131072, 1, 131073, 8, 131074, 1, 131075, 1, 131076, 1, 196608, 3, 196611, 1, 196612, 2, 262144, 5, 262145, 2 )
 script/script = ExtResource( 4 )
 pixelsPerHeight = 6
 
@@ -145,34 +220,43 @@ collision/mask = 1
 occluder/light_mask = 1
 tile_data = IntArray( -1, 0, -65536, 0, -65535, 0, -65534, 2, -65533, 3, -65532, 0, -65531, 0, 65535, 0, 131071, 0, 196607, 0, 262143, 0, 327679, 0 )
 
-[node name="cyborg" parent="world" instance=ExtResource( 6 )]
+[node name="cursor" type="Sprite" parent="world"]
+
+transform/pos = Vector2( -17, 47 )
+script/script = SubResource( 5 )
+
+[node name="sprite" type="Sprite" parent="world/cursor"]
+
+texture = ExtResource( 6 )
+offset = Vector2( 0, 8 )
+
+[node name="cyborg" parent="world" instance=ExtResource( 7 )]
 
 transform/pos = Vector2( 16, 3 )
 
 [node name="Sprite" type="Sprite" parent="world"]
 
+visibility/visible = false
 transform/pos = Vector2( 1, -24 )
-texture = ExtResource( 7 )
+texture = ExtResource( 8 )
 
 [node name="Sprite1" type="Sprite" parent="world"]
 
+visibility/visible = false
 transform/pos = Vector2( -34, 4 )
-texture = ExtResource( 7 )
+texture = ExtResource( 8 )
 
 [node name="Sprite4" type="Sprite" parent="world"]
 
+visibility/visible = false
 transform/pos = Vector2( -67, 21 )
-texture = ExtResource( 7 )
+texture = ExtResource( 8 )
 
 [node name="Sprite2" type="Sprite" parent="world"]
 
+visibility/visible = false
 transform/pos = Vector2( 48, 33 )
-texture = ExtResource( 7 )
-
-[node name="Sprite3" type="Sprite" parent="world"]
-
-transform/pos = Vector2( 17, 50 )
-texture = ExtResource( 7 )
+texture = ExtResource( 8 )
 
 [node name="mouseHelper" type="Node2D" parent="world"]
 

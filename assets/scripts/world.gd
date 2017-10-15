@@ -1,4 +1,4 @@
-extends Node
+extends TileMap
 
 var width
 var height
@@ -33,8 +33,8 @@ func _ready():
 	
 	var tileset = get_tileset()
 	
-	for x in range(0, width - 1):
-		for y in range(0, height - 1):
+	for x in range(0, width ):
+		for y in range(0, height):
 			var p = Vector2(x, y)
 			var id = flv(p)
 			
@@ -42,7 +42,7 @@ func _ready():
 			
 			if get_cellv(p) >= 0:
 				var h = tileset.tile_get_occluder_offset(get_cellv(p)).y
-				heightmap[id] = h
+				heightmap[id] = h * pixelsPerHeight
 			else:
 				forbid_at(x, y)
 				heightmap[id] = 0
@@ -66,3 +66,6 @@ func flv(vec):
 func is_withinv(vec):
 	return (vec.x >= 0 && vec.y >= 0 && vec.x < width && vec.y < height)
 
+func fix_pos(obj, offs):
+	var p = world_to_map(obj.get_pos())
+	obj.set_pos(map_to_world(p) + Vector2(0, get_cell_size().y / 2 + offs))

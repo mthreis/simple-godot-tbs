@@ -169,7 +169,7 @@ func _process(delta):
 				else:
 					if sideToNext == TOP:
 						get_node("Anim").play("idle_up")
-					elif sideToNext == BOTTOM:
+					elif sideToNext == BOTTOM:F
 						get_node("Anim").play("idle_down")
 					elif sideToNext == LEFT:
 						get_node("Anim").play("idle_left")
