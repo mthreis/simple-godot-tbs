@@ -50,6 +50,9 @@ func _ready():
 func set_unit_at(pos, unit):
 	units[flv(pos)] = unit
 
+func get_unit_at(pos):
+	return units[flv(pos)] 
+
 func forbid_at(x, y):
 	mstar.forbid(x, y)
 
@@ -59,9 +62,29 @@ func free_at(x, y):
 func get_heightmap_at_v(vec):
 	return heightmap[flv(vec)]
 
+func find_path(from, to):
+	var pth = []
+	
+	for i in mstar.find_path_v(from, to):
+		pth.append(i)
+	
+	return pth
+
+
 #this returns an 1D index of the 2D position
 func flv(vec):
 	return mstar.flatten(vec.x, vec.y)
+
+func get_actors():
+	var a = []
+	
+	for i in get_children():
+		if i.is_in_group("actors"):
+			a.append(i)
+	
+	return a
+
+
 
 func is_withinv(vec):
 	return (vec.x >= 0 && vec.y >= 0 && vec.x < width && vec.y < height)

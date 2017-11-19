@@ -18,6 +18,8 @@ func start():
 	offset = get_offset().y
 	if world != null:
 		gridPos = world.world_to_map(get_pos())
+		
+		teleport_to_v(gridPos)
 		print("gridPos: " + str(gridPos))
 	
 	set_process_input(true)

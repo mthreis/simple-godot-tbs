@@ -6,7 +6,7 @@ var gridPos
 var path = []
 var isMoving = false
 
-const ALLY = 0
+const ALLY =  0
 const ENEMY = 1
 
 var isAttacking = false
@@ -36,7 +36,7 @@ var strength = 10
 var resistance = 10
 var dexterity = 10
 var wisdom = 10
-
+var side
 var trueBonusHP  = 0
 var trueBonusMP  = 0
 var trueBonusStr = 0
@@ -119,8 +119,6 @@ func get_angle_dg(from, to):
 
 func get_side(angle):
 	return floor(angle / 90)
-	
-
 
 var height
 
@@ -169,7 +167,7 @@ func _process(delta):
 				else:
 					if sideToNext == TOP:
 						get_node("Anim").play("idle_up")
-					elif sideToNext == BOTTOM:F
+					elif sideToNext == BOTTOM:
 						get_node("Anim").play("idle_down")
 					elif sideToNext == LEFT:
 						get_node("Anim").play("idle_left")
@@ -223,6 +221,9 @@ func _ready():
 	set_process(true)
 	if world != null:
 		gridPos = world.world_to_map(get_pos())
+		teleport_to_v(gridPos)
+		
+		
 	
 	offset = get_offset()
 	height = 0

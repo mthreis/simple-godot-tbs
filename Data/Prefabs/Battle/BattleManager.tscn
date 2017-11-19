@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=1]
+[gd_scene load_steps=13 format=1]
 
 [ext_resource path="res://Data/Scripts/Battle/BattleManager.gd" type="Script" id=1]
 [ext_resource path="res://Data/Textures/Sprites/Battle/Cursor.png" type="Texture" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://px.png" type="Texture" id=6]
 [ext_resource path="res://04B_03__.fnt" type="BitmapFont" id=7]
 [ext_resource path="res://Data/Textures/Sprites/UI/Arrow.png" type="Texture" id=8]
+[ext_resource path="res://assets/textures/portraits/portrait.png" type="Texture" id=9]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -180,6 +181,7 @@ scale = Vector2( 1, 1 )
 
 [node name="UI" type="Control" parent="Canvas"]
 
+editor/display_folded = true
 anchor/right = 1
 anchor/bottom = 1
 rect/scale = Vector2( 3, 3 )
@@ -440,14 +442,13 @@ max_lines_visible = -1
 
 [node name="ActorInfo" type="Panel" parent="Canvas/UI"]
 
-visibility/visible = false
 focus/ignore_mouse = false
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 2
 margin/left = 3.0
 margin/top = 153.0
-margin/right = 108.0
+margin/right = 98.0
 margin/bottom = 176.0
 script/script = ExtResource( 5 )
 __meta__ = {
@@ -480,9 +481,9 @@ focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-margin/left = 4.0
+margin/left = 28.0
 margin/top = 4.0
-margin/right = 20.0
+margin/right = 69.0
 margin/bottom = 21.0
 custom_fonts/font = ExtResource( 7 )
 custom_colors/font_color = Color( 0.910156, 0.795165, 0.17421, 1 )
@@ -498,9 +499,9 @@ focus/ignore_mouse = true
 focus/stop_mouse = true
 size_flags/horizontal = 2
 size_flags/vertical = 0
-margin/left = 4.0
+margin/left = 28.0
 margin/top = 14.0
-margin/right = 45.0
+margin/right = 69.0
 margin/bottom = 31.0
 custom_fonts/font = ExtResource( 7 )
 custom_colors/font_color = Color( 0.910156, 0.191459, 0.17421, 1 )
@@ -530,6 +531,7 @@ max_lines_visible = -1
 
 [node name="MP" type="Label" parent="Canvas/UI/ActorInfo"]
 
+visibility/visible = false
 anchor/left = 1
 focus/ignore_mouse = true
 focus/stop_mouse = true
@@ -567,6 +569,7 @@ max_lines_visible = -1
 
 [node name="Level" type="Label" parent="Canvas/UI/ActorInfo"]
 
+visibility/visible = false
 anchor/left = 1
 focus/ignore_mouse = true
 focus/stop_mouse = true
@@ -602,6 +605,19 @@ align = 2
 percent_visible = 1.0
 lines_skipped = 0
 max_lines_visible = -1
+
+[node name="TextureFrame" type="TextureFrame" parent="Canvas/UI/ActorInfo"]
+
+focus/ignore_mouse = true
+focus/stop_mouse = true
+size_flags/horizontal = 2
+size_flags/vertical = 2
+margin/left = 1.0
+margin/top = -25.0
+margin/right = 25.0
+margin/bottom = 23.0
+texture = ExtResource( 9 )
+stretch_mode = 0
 
 [connection signal="has_entered_actions_menu" from="." to="Canvas/UI/UnitActions/Menu" method="_on_BattleManager_has_entered_actions_menu"]
 

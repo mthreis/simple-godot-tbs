@@ -1,21 +1,14 @@
-[gd_scene load_steps=4 format=1]
+[gd_scene load_steps=6 format=1]
 
 [ext_resource path="res://assets/scripts/cyborg.gd" type="Script" id=1]
 [ext_resource path="res://Data/Textures/Sprites/Actors/Actor.png" type="Texture" id=2]
 [ext_resource path="res://Data/Textures/Sprites/Actors/ActorNaMerda.png" type="Texture" id=3]
+[ext_resource path="res://assets/scripts/cyborg/cyborg_info.gd" type="Script" id=4]
+[ext_resource path="res://assets/scripts/cyborg/cyborg_stats.gd" type="Script" id=5]
 
 [node name="cyborg" type="Node2D"]
 
 script/script = ExtResource( 1 )
-name = null
-id = null
-resistance = 3
-strength = 3
-accuracy = 3
-move = 3
-jump = 3
-ram = 3
-body = "regular"
 group = 0
 
 [node name="sprite" type="Node2D" parent="."]
@@ -28,7 +21,7 @@ __meta__ = {
 
 editor/display_folded = true
 texture = ExtResource( 2 )
-offset = Vector2( 0, -6 )
+offset = Vector2( 0, -7 )
 vframes = 4
 hframes = 4
 
@@ -47,7 +40,7 @@ autoplay = ""
 editor/display_folded = true
 visibility/visible = false
 texture = ExtResource( 3 )
-offset = Vector2( 0, -3 )
+offset = Vector2( 0, -4 )
 vframes = 4
 
 [node name="animator" type="AnimationPlayer" parent="sprite/wounded"]
@@ -61,5 +54,21 @@ blend_times = [  ]
 autoplay = ""
 
 [node name="badges" type="Node" parent="."]
+
+[node name="info" type="Node" parent="."]
+
+script/script = ExtResource( 4 )
+name = "Alario"
+case_ = 0
+
+[node name="stats" type="Node" parent="."]
+
+script/script = ExtResource( 5 )
+resistance = null
+accuracy = null
+strength = null
+ram = null
+move = null
+jump = null
 
 

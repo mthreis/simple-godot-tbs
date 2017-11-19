@@ -39,7 +39,6 @@ func _ready():
 		manager.world.add_child(mk)
 		mk.set_owner(manager.world)
 		
-		
 		mk.set_pos(world.map_to_world(i) + Vector2(0, world.get_cell_size().y / 2 - 1))
 		mk.set_offset(mk.offset - Vector2(0, world.get_tile_height(i.x, i.y)))
 		

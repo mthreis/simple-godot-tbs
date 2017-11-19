@@ -2,7 +2,7 @@
 
 [ext_resource path="res://assets/materials/gradient.tres" type="Shader" id=1]
 [ext_resource path="res://px.png" type="Texture" id=2]
-[ext_resource path="res://Data/Tilesets/Grasslands.tres" type="TileSet" id=3]
+[ext_resource path="res://assets/tilesets/grasslands.tres" type="TileSet" id=3]
 [ext_resource path="res://Data/Scripts/World.gd" type="Script" id=4]
 [ext_resource path="res://Data/Tilesets/Collilder.tres" type="TileSet" id=5]
 [ext_resource path="res://Data/Textures/Sprites/Actors/Actor.png" type="Texture" id=6]
@@ -178,7 +178,7 @@ stretch_mode = 0
 
 mode = 1
 tile_set = ExtResource( 3 )
-cell/size = Vector2( 24, 12 )
+cell/size = Vector2( 32, 16 )
 cell/quadrant_size = 16
 cell/custom_transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 cell/half_offset = 2
@@ -190,7 +190,7 @@ collision/bounce = 0.0
 collision/layers = 1
 collision/mask = 1
 occluder/light_mask = 1
-tile_data = IntArray( 131079, 3, 131080, 3, 131081, 3, 196614, 2, 196615, 2, 196616, 2, 196617, 3, 196618, 1, 262149, 2, 262150, 2, 262151, 1, 262152, 2, 262153, 1, 262154, 0, 262155, 1, 327684, 3, 327685, 2, 327686, 1, 327687, 0, 327688, 0, 327689, 0, 327690, 0, 327691, 1, 327692, 1, 393221, 2, 393222, 1, 393223, 0, 393224, 1, 393225, 0, 393226, 0, 393227, 1, 393228, 1, 393229, 1, 458757, 3, 458758, 2, 458759, 0, 458760, 0, 458761, 0, 458762, 0, 458763, 0, 458764, 1, 458765, 1, 458766, 1, 524293, 1, 524294, 1, 524295, 0, 524296, 1, 524297, 0, 524298, 0, 524299, 0, 524300, 0, 524301, 1, 524302, 1, 589830, 1, 589831, 1, 589832, 0, 589833, 0, 589834, 0, 589835, 0, 589836, 0, 589837, 1, 589838, 1, 655367, 2, 655368, 1, 655369, 0, 655370, 0, 655371, 0, 655372, 1, 655373, 1, 655374, 1, 720903, 3, 720904, 2, 720905, 1, 720906, 1, 720907, 1, 720908, 1, 720909, 1, 786439, 3, 786440, 2, 786441, 2, 786442, 1, 786443, 1, 786444, 1, 851978, 1, 851979, 1, 917514, 1, 917515, 1, 983050, 0, 983051, 0, 1048585, 0, 1048586, 0, 1048587, 0, 1048588, 1, 1114120, 2, 1114121, 0, 1114122, 0, 1114123, 1, 1114124, 1, 1114125, 1, 1179654, 3, 1179655, 3, 1179656, 2, 1179657, 0, 1179658, 1, 1179659, 1, 1179660, 1, 1179661, 1, 1179662, 1, 1245191, 2, 1245192, 2, 1245193, 1, 1245194, 1, 1245195, 1, 1245196, 1, 1245197, 1, 1245198, 0, 1310728, 2, 1310729, 2, 1310730, 1, 1310731, 1, 1310732, 1, 1310733, 0, 1310734, 1, 1376264, 3, 1376265, 2, 1376266, 2, 1376267, 1, 1376268, 0, 1376269, 0, 1376270, 0, 1441802, 2, 1441803, 0, 1441804, 0, 1441805, 0 )
+tile_data = IntArray( 196614, 0, 196615, 0, 262150, 0, 262151, 0, 327685, 0, 327686, 0, 327687, 0, 327688, 0, 393222, 0, 393223, 0, 393224, 0, 524299, 0, 589832, 0, 589833, 0, 589834, 0, 589835, 0 )
 script/script = ExtResource( 4 )
 
 [node name="Collider" type="TileMap" parent="World"]
@@ -198,7 +198,7 @@ script/script = ExtResource( 4 )
 z/z = 99
 mode = 1
 tile_set = ExtResource( 5 )
-cell/size = Vector2( 24, 12 )
+cell/size = Vector2( 32, 16 )
 cell/quadrant_size = 16
 cell/custom_transform = Matrix32( 1, 0, 0, 1, 0, 0 )
 cell/half_offset = 2
